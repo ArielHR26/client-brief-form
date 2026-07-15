@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שאלון אפיון פרויקט</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --color-primary:#0F172A;
+    --color-on-primary:#FFFFFF;
+    --color-secondary:#334155;
+    --color-accent:#0369A1;
+    --color-accent-dark:#075985;
+    --color-background:#F8FAFC;
+    --color-surface:#FFFFFF;
+    --color-foreground:#0F172A;
+    --color-muted:#64748B;
+    --color-muted-bg:#F1F5F9;
+    --color-border:#E2E8F0;
+    --color-destructive:#DC2626;
+    --color-success:#16A34A;
+    --radius:14px;
+    --shadow-sm:0 1px 2px rgba(15,23,42,.06);
+    --shadow-md:0 4px 16px rgba(15,23,42,.08);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Heebo',system-ui,sans-serif;
+    background:var(--color-background);
+    color:var(--color-foreground);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--color-accent);}
+
+  /* progress bar */
+  #progressBar{
+    position:fixed;top:0;right:0;left:0;height:4px;
+    background:var(--color-muted-bg);z-index:100;
+  }
+  #progressFill{
+    height:100%;width:0%;background:var(--color-accent);
+    transition:width .15s ease-out;
+  }
+
+  header.hero{
+    padding:56px 20px 40px;
+    text-align:center;
+    background:var(--color-primary);
+    color:var(--color-on-primary);
+  }
+  header.hero h1{
+    font-size:clamp(24px,4vw,32px);
+    font-weight:800;
+    margin:0 0 12px;
+  }
+  header.hero p{
+    max-width:560px;
+    margin:0 auto;
+    color:#CBD5E1;
+    font-size:16px;
+  }
+
+  main{
+    max-width:720px;
+    margin:-24px auto 0;
+    padding:0 16px 80px;
+  }
+
+  form{display:flex;flex-direction:column;gap:20px;}
+
+  .card{
+    background:var(--color-surface);
+    border:1px solid var(--color-border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow-sm);
+    padding:24px 20px;
+  }
+  .card h2{
+    font-size:19px;
+    font-weight:700;
+    margin:0 0 4px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .card h2 .num{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:28px;height:28px;
+    border-radius:50%;
+    background:var(--color-accent);
+    color:#fff;
+    font-size:14px;
+    flex:none;
+  }
+  .card > p.hint{
+    color:var(--color-muted);
+    font-size:14px;
+    margin:0 0 18px;
+  }
+
+  .field{margin-bottom:18px;}
+  .field:last-child{margin-bottom:0;}
+  .field label.q{
+    display:block;
+    font-weight:600;
+    font-size:15px;
+    margin-bottom:8px;
+  }
+  .field .required{color:var(--color-destructive);margin-inline-start:2px;}
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  select,
+  textarea{
+    width:100%;
+    font-family:inherit;
+    font-size:16px;
+    padding:11px 14px;
+    border:1px solid var(--color-border);
+    border-radius:10px;
+    background:var(--color-surface);
+    color:var(--color-foreground);
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  textarea{min-height:88px;resize:vertical;}
+  input:focus,select:focus,textarea:focus{
+    outline:none;
+    border-color:var(--color-accent);
+    box-shadow:0 0 0 3px rgba(3,105,161,.15);
+  }
+  ::placeholder{color:#94A3B8;}
+
+  .choice-group{display:flex;flex-wrap:wrap;gap:8px;}
+  .choice{
+    position:relative;
+  }
+  .choice input{
+    position:absolute;opacity:0;width:1px;height:1px;
+  }
+  .choice label{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:9px 16px;
+    min-height:44px;
+    border:1px solid var(--color-border);
+    border-radius:999px;
+    font-size:14px;
+    cursor:pointer;
+    background:var(--color-surface);
+    transition:background .15s ease, border-color .15s ease, color .15s ease;
+  }
+  .choice input:checked + label{
+    background:var(--color-primary);
+    border-color:var(--color-primary);
+    color:#fff;
+  }
+  .choice input:focus-visible + label{
+    box-shadow:0 0 0 3px rgba(3,105,161,.25);
+  }
+
+  .subfield{
+    margin-top:10px;
+    display:none;
+  }
+  .subfield.show{display:block;}
+
+  .type-selector{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+  }
+  .type-selector .choice label{
+    width:100%;
+    justify-content:center;
+    border-radius:12px;
+    padding:16px 8px;
+    font-weight:600;
+    text-align:center;
+  }
+  @media (max-width:480px){
+    .type-selector{grid-template-columns:1fr;}
+  }
+
+  .type-block{
+    display:none;
+    border-top:1px dashed var(--color-border);
+    margin-top:20px;
+    padding-top:20px;
+  }
+  .type-block.show{display:block;}
+
+  button[type="submit"]{
+    cursor:pointer;
+    width:100%;
+    padding:16px;
+    font-family:inherit;
+    font-size:17px;
+    font-weight:700;
+    color:#fff;
+    background:var(--color-accent);
+    border:none;
+    border-radius:12px;
+    transition:background .2s ease, transform .1s ease;
+  }
+  button[type="submit"]:hover{background:var(--color-accent-dark);}
+  button[type="submit"]:active{transform:scale(.99);}
+  button[type="submit"]:disabled{opacity:.6;cursor:not-allowed;}
+
+  .status-msg{
+    font-size:14px;
+    text-align:center;
+    margin-top:10px;
+    display:none;
+  }
+  .status-msg.show{display:block;}
+  .status-msg.error{color:var(--color-destructive);}
+
+  #successScreen{
+    display:none;
+    text-align:center;
+    padding:60px 20px;
+  }
+  #successScreen.show{display:block;}
+  #successScreen .icon{
+    width:72px;height:72px;
+    margin:0 auto 20px;
+    border-radius:50%;
+    background:#DCFCE7;
+    color:var(--color-success);
+    display:flex;align-items:center;justify-content:center;
+  }
+  #successScreen h2{font-size:24px;margin:0 0 10px;}
+  #successScreen p{color:var(--color-muted);max-width:420px;margin:0 auto;}
+
+  footer{
+    text-align:center;
+    color:var(--color-muted);
+    font-size:13px;
+    padding:24px 20px 40px;
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<div id="progressBar"><div id="progressFill"></div></div>
+
+<header class="hero">
+  <h1>שאלון אפיון פרויקט</h1>
+  <p>כמה דקות למילוי — ותוך כדי זה כבר מתחילים לתכנן ביחד. ככל שתפרטו יותר, כך נבנה משהו שמדויק יותר בשבילכם.</p>
+</header>
+
+<main>
+  <form id="briefForm">
+
+    <!-- contact -->
+    <div class="card">
+      <h2><span class="num">•</span> פרטי יצירת קשר</h2>
+      <p class="hint">כדי שנוכל לחזור אליכם עם המשך העבודה.</p>
+
+      <div class="field">
+        <label class="q" for="contactName">שם מלא<span class="required">*</span></label>
+        <input type="text" id="contactName" name="contactName" required autocomplete="name" placeholder="לדוגמה: דנה כהן">
+      </div>
+      <div class="field">
+        <label class="q" for="contactPhone">טלפון<span class="required">*</span></label>
+        <input type="tel" id="contactPhone" name="contactPhone" required autocomplete="tel" placeholder="05X-XXXXXXX">
+      </div>
+      <div class="field">
+        <label class="q" for="contactEmail">אימייל</label>
+        <input type="email" id="contactEmail" name="contactEmail" autocomplete="email" placeholder="name@example.com">
+      </div>
+      <div class="field">
+        <label class="q" for="companyName">שם עסק / חברה (אם רלוונטי)</label>
+        <input type="text" id="companyName" name="companyName">
+      </div>
+    </div>
+
+    <!-- 1 -->
+    <div class="card">
+      <h2><span class="num">1</span> מה ולמה</h2>
+
+      <div class="field">
+        <label class="q" for="oneLiner">תארו במשפט אחד: "משהו ש___ בשביל ___"</label>
+        <input type="text" id="oneLiner" name="oneLiner" placeholder="לדוגמה: משהו שמנהל לי הזמנות בשביל שלא אאבד לקוחות">
+      </div>
+      <div class="field">
+        <label class="q">איך זה נעשה היום, בלי המערכת?</label>
+        <div class="choice-group" data-group="today">
+          <div class="choice"><input type="radio" name="today" id="today1" value="אקסל ידני"><label for="today1">אקסל ידני</label></div>
+          <div class="choice"><input type="radio" name="today" id="today2" value="נייר"><label for="today2">נייר</label></div>
+          <div class="choice"><input type="radio" name="today" id="today3" value="וואטסאפ"><label for="today3">וואטסאפ</label></div>
+          <div class="choice"><input type="radio" name="today" id="today4" value="כלום"><label for="today4">כלום</label></div>
+          <div class="choice"><input type="radio" name="today" id="today5" value="אחר"><label for="today5">אחר</label></div>
+        </div>
+        <textarea class="subfield" data-show-if="today=אחר" name="todayOther" placeholder="פרטו..."></textarea>
+      </div>
+      <div class="field">
+        <label class="q">מה הבעיה הכי כואבת שגורמת לכם לרצות את זה?</label>
+        <div class="choice-group" data-group="pain">
+          <div class="choice"><input type="checkbox" name="pain" id="pain1" value="בזבוז זמן"><label for="pain1">בזבוז זמן</label></div>
+          <div class="choice"><input type="checkbox" name="pain" id="pain2" value="טעויות"><label for="pain2">טעויות</label></div>
+          <div class="choice"><input type="checkbox" name="pain" id="pain3" value="בלגן וחוסר סדר"><label for="pain3">בלגן וחוסר סדר</label></div>
+          <div class="choice"><input type="checkbox" name="pain" id="pain4" value="חוויית לקוחות"><label for="pain4">חוויית לקוחות</label></div>
+          <div class="choice"><input type="checkbox" name="pain" id="pain5" value="אחר"><label for="pain5">אחר</label></div>
+        </div>
+        <textarea name="painDetails" placeholder="פרטים נוספים (לא חובה)"></textarea>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="card">
+      <h2><span class="num">2</span> מי משתמש</h2>
+
+      <div class="field">
+        <label class="q">מי המשתמשים?</label>
+        <div class="choice-group" data-group="users">
+          <div class="choice"><input type="radio" name="users" id="users1" value="אני בלבד"><label for="users1">אני בלבד</label></div>
+          <div class="choice"><input type="radio" name="users" id="users2" value="צוות"><label for="users2">צוות</label></div>
+          <div class="choice"><input type="radio" name="users" id="users3" value="הלקוחות שלי"><label for="users3">הלקוחות שלי</label></div>
+          <div class="choice"><input type="radio" name="users" id="users4" value="הציבור הרחב"><label for="users4">הציבור הרחב</label></div>
+        </div>
+      </div>
+      <div class="field">
+        <label class="q" for="usersCount">כמה בערך?</label>
+        <select id="usersCount" name="usersCount">
+          <option value="">בחרו...</option>
+          <option value="1">1</option>
+          <option value="2-5">2–5</option>
+          <option value="6-20">6–20</option>
+          <option value="21-50">21–50</option>
+          <option value="מאות">מאות</option>
+          <option value="אלפים ומעלה">אלפים ומעלה</option>
+          <option value="לא יודע/ת">לא יודע/ת</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="q">יש סוגי משתמשים עם הרשאות שונות? (מנהל שרואה הכל מול עובד שרואה חלק)</label>
+        <div class="choice-group" data-group="permissions">
+          <div class="choice"><input type="radio" name="permissions" id="perm1" value="כן"><label for="perm1">כן</label></div>
+          <div class="choice"><input type="radio" name="permissions" id="perm2" value="לא"><label for="perm2">לא</label></div>
+          <div class="choice"><input type="radio" name="permissions" id="perm3" value="לא יודע/ת"><label for="perm3">לא יודע/ת</label></div>
+        </div>
+        <textarea class="subfield" data-show-if="permissions=כן" name="permissionsDetails" placeholder="פרטו את סוגי המשתמשים וההרשאות..."></textarea>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="card">
+      <h2><span class="num">3</span> מה זה צריך לעשות</h2>
+
+      <div class="field">
+        <label class="q" for="mainActions">3–5 הדברים העיקריים שיקרו כאן</label>
+        <textarea id="mainActions" name="mainActions" placeholder="לדוגמה: להוסיף לקוח, להפיק דוח, לשלוח הזמנה..."></textarea>
+      </div>
+      <div class="field">
+        <label class="q" for="mustHave">אם רק דבר אחד יעבוד — מה הוא? (הכי חשוב)</label>
+        <input type="text" id="mustHave" name="mustHave">
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="card">
+      <h2><span class="num">4</span> נתונים — מה נכנס ומה יוצא</h2>
+
+      <div class="field">
+        <label class="q">מה נכנס למערכת?</label>
+        <div class="choice-group" data-group="dataIn">
+          <div class="choice"><input type="checkbox" name="dataIn" id="dataIn1" value="טקסט שמקלידים"><label for="dataIn1">טקסט שמקלידים</label></div>
+          <div class="choice"><input type="checkbox" name="dataIn" id="dataIn2" value="קבצים"><label for="dataIn2">קבצים</label></div>
+          <div class="choice"><input type="checkbox" name="dataIn" id="dataIn3" value="תמונות"><label for="dataIn3">תמונות</label></div>
+          <div class="choice"><input type="checkbox" name="dataIn" id="dataIn4" value="מקור נתונים אחר"><label for="dataIn4">מקור נתונים אחר</label></div>
+        </div>
+      </div>
+      <div class="field">
+        <label class="q">מאיפה זה מגיע?</label>
+        <div class="choice-group" data-group="dataSource">
+          <div class="choice"><input type="radio" name="dataSource" id="src1" value="הקלדה ידנית"><label for="src1">הקלדה ידנית</label></div>
+          <div class="choice"><input type="radio" name="dataSource" id="src2" value="אקסל"><label for="src2">אקסל</label></div>
+          <div class="choice"><input type="radio" name="dataSource" id="src3" value="מערכת אחרת"><label for="src3">מערכת אחרת</label></div>
+          <div class="choice"><input type="radio" name="dataSource" id="src4" value="מייל"><label for="src4">מייל</label></div>
+          <div class="choice"><input type="radio" name="dataSource" id="src5" value="אתר"><label for="src5">אתר</label></div>
+        </div>
+      </div>
+      <div class="field">
+        <label class="q">מה רוצים לקבל בסוף?</label>
+        <div class="choice-group" data-group="dataOut">
+          <div class="choice"><input type="checkbox" name="dataOut" id="out1" value="רשימה על מסך"><label for="out1">רשימה על מסך</label></div>
+          <div class="choice"><input type="checkbox" name="dataOut" id="out2" value="דוח"><label for="out2">דוח</label></div>
+          <div class="choice"><input type="checkbox" name="dataOut" id="out3" value="קובץ"><label for="out3">קובץ</label></div>
+          <div class="choice"><input type="checkbox" name="dataOut" id="out4" value="מייל"><label for="out4">מייל</label></div>
+          <div class="choice"><input type="checkbox" name="dataOut" id="out5" value="הודעה"><label for="out5">הודעה</label></div>
+        </div>
+      </div>
+      <div class="field">
+        <label class="q">המידע צריך להישמר לאורך זמן?</label>
+        <div class="choice-group" data-group="dataPersist">
+          <div class="choice"><input type="radio" name="dataPersist" id="pers1" value="כן, לאורך זמן"><label for="pers1">כן, לאורך זמן</label></div>
+          <div class="choice"><input type="radio" name="dataPersist" id="pers2" value="לא, חד־פעמי"><label for="pers2">לא, חד־פעמי</label></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="card">
+      <h2><span class="num">5</span> חיבורים ומגבלות</h2>
+
+      <div class="field">
+        <label class="q">צריך להתחבר לכלים קיימים?</label>
+        <div class="choice-group" data-group="integrations">
+          <div class="choice"><input type="checkbox" name="integrations" id="int1" value="אקסל"><label for="int1">אקסל</label></div>
+          <div class="choice"><input type="checkbox" name="integrations" id="int2" value="Google"><label for="int2">Google</label></div>
+          <div class="choice"><input type="checkbox" name="integrations" id="int3" value="וואטסאפ"><label for="int3">וואטסאפ</label></div>
+          <div class="choice"><input type="checkbox" name="integrations" id="int4" value="מייל"><label for="int4">מייל</label></div>
+          <div class="choice"><input type="checkbox" name="integrations" id="int5" value="Power BI"><label for="int5">Power BI</label></div>
+          <div class="choice"><input type="checkbox" name="integrations" id="int6" value="סליקה"><label for="int6">סליקה</label></div>
+          <div class="choice"><input type="checkbox" name="integrations" id="int7" value="CRM"><label for="int7">CRM</label></div>
+          <div class="choice"><input type="checkbox" name="integrations" id="int8" value="לא צריך"><label for="int8">לא צריך</label></div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="q">יש דדליין?</label>
+        <div class="choice-group" data-group="hasDeadline">
+          <div class="choice"><input type="radio" name="hasDeadline" id="dl1" value="כן"><label for="dl1">כן</label></div>
+          <div class="choice"><input type="radio" name="hasDeadline" id="dl2" value="לא"><label for="dl2">לא</label></div>
+        </div>
+        <input type="text" class="subfield" data-show-if="hasDeadline=כן" name="deadlineDetails" placeholder="עד מתי בערך?">
+      </div>
+
+      <div class="field">
+        <label class="q">יש תקציב מוגדר?</label>
+        <div class="choice-group" data-group="hasBudget">
+          <div class="choice"><input type="radio" name="hasBudget" id="bg1" value="כן"><label for="bg1">כן</label></div>
+          <div class="choice"><input type="radio" name="hasBudget" id="bg2" value="לא"><label for="bg2">לא</label></div>
+        </div>
+        <input type="text" class="subfield" data-show-if="hasBudget=כן" name="budgetDetails" placeholder="טווח תקציב משוער">
+      </div>
+
+      <div class="field">
+        <label class="q">יש טכנולוגיה שחייבים / אסור להשתמש בה?</label>
+        <div class="choice-group" data-group="hasTechConstraint">
+          <div class="choice"><input type="radio" name="hasTechConstraint" id="tc1" value="כן"><label for="tc1">כן</label></div>
+          <div class="choice"><input type="radio" name="hasTechConstraint" id="tc2" value="לא"><label for="tc2">לא</label></div>
+        </div>
+        <textarea class="subfield" data-show-if="hasTechConstraint=כן" name="techConstraintDetails" placeholder="פרטו..."></textarea>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="card">
+      <h2><span class="num">6</span> איך נדע שהצליח</h2>
+
+      <div class="field">
+        <label class="q" for="successLook">איך ייראה אם הכל עבד מושלם? מה ישתנה ביום־יום?</label>
+        <textarea id="successLook" name="successLook"></textarea>
+      </div>
+      <div class="field">
+        <label class="q">מה אסור שיקרה בשום מקרה?</label>
+        <div class="choice-group" data-group="mustNotHappen">
+          <div class="choice"><input type="checkbox" name="mustNotHappen" id="mnh1" value="איבוד מידע"><label for="mnh1">איבוד מידע</label></div>
+          <div class="choice"><input type="checkbox" name="mustNotHappen" id="mnh2" value="טעות מול לקוח"><label for="mnh2">טעות מול לקוח</label></div>
+          <div class="choice"><input type="checkbox" name="mustNotHappen" id="mnh3" value="כפילות"><label for="mnh3">כפילות</label></div>
+          <div class="choice"><input type="checkbox" name="mustNotHappen" id="mnh4" value="אחר"><label for="mnh4">אחר</label></div>
+        </div>
+        <textarea name="mustNotHappenDetails" placeholder="פרטים נוספים (לא חובה)"></textarea>
+      </div>
+    </div>
+
+    <!-- 7 project type -->
+    <div class="card">
+      <h2><span class="num">7</span> סוג הפרויקט</h2>
+      <p class="hint">בחרו את הסוג המתאים — יופיעו שאלות ממוקדות בהתאם.</p>
+
+      <div class="field">
+        <div class="choice-group type-selector" data-group="projectType">
+          <div class="choice"><input type="radio" name="projectType" id="pt1" value="אתר"><label for="pt1">🌐 אתר</label></div>
+          <div class="choice"><input type="radio" name="projectType" id="pt2" value="אפליקציה"><label for="pt2">📱 אפליקציה</label></div>
+          <div class="choice"><input type="radio" name="projectType" id="pt3" value="אוטומציה"><label for="pt3">⚙️ אוטומציה</label></div>
+        </div>
+      </div>
+
+      <!-- website block -->
+      <div class="type-block" data-type-block="אתר">
+        <div class="field">
+          <label class="q">מה מטרת האתר?</label>
+          <div class="choice-group" data-group="siteGoal">
+            <div class="choice"><input type="radio" name="siteGoal" id="sg1" value="תדמית"><label for="sg1">תדמית</label></div>
+            <div class="choice"><input type="radio" name="siteGoal" id="sg2" value="מכירות"><label for="sg2">מכירות</label></div>
+            <div class="choice"><input type="radio" name="siteGoal" id="sg3" value="לידים"><label for="sg3">לידים</label></div>
+            <div class="choice"><input type="radio" name="siteGoal" id="sg4" value="מידע"><label for="sg4">מידע</label></div>
+            <div class="choice"><input type="radio" name="siteGoal" id="sg5" value="חנות"><label for="sg5">חנות</label></div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="q" for="sitePages">כמה עמודים בערך, ומה הם?</label>
+          <textarea id="sitePages" name="sitePages" placeholder="לדוגמה: בית, אודות, צור קשר, בלוג..."></textarea>
+        </div>
+        <div class="field">
+          <label class="q" for="siteBranding">יש לוגו, צבעים או מיתוג קיים? אתר שאהבתם ואחד שלא (קישור)</label>
+          <textarea id="siteBranding" name="siteBranding"></textarea>
+        </div>
+        <div class="field">
+          <label class="q">צריך ניהול תוכן עצמאי, טפסים, או תשלום אונליין?</label>
+          <div class="choice-group" data-group="siteNeeds">
+            <div class="choice"><input type="checkbox" name="siteNeeds" id="sn1" value="ניהול תוכן עצמאי"><label for="sn1">ניהול תוכן עצמאי</label></div>
+            <div class="choice"><input type="checkbox" name="siteNeeds" id="sn2" value="טפסים"><label for="sn2">טפסים</label></div>
+            <div class="choice"><input type="checkbox" name="siteNeeds" id="sn3" value="תשלום אונליין"><label for="sn3">תשלום אונליין</label></div>
+            <div class="choice"><input type="checkbox" name="siteNeeds" id="sn4" value="אף אחד מאלה"><label for="sn4">אף אחד מאלה</label></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- app block -->
+      <div class="type-block" data-type-block="אפליקציה">
+        <div class="field">
+          <label class="q">רצה בדפדפן, בטלפון, או בתוכנה במחשב?</label>
+          <div class="choice-group" data-group="appPlatform">
+            <div class="choice"><input type="radio" name="appPlatform" id="ap1" value="דפדפן"><label for="ap1">דפדפן</label></div>
+            <div class="choice"><input type="radio" name="appPlatform" id="ap2" value="אנדרואיד"><label for="ap2">אנדרואיד</label></div>
+            <div class="choice"><input type="radio" name="appPlatform" id="ap3" value="אייפון"><label for="ap3">אייפון</label></div>
+            <div class="choice"><input type="radio" name="appPlatform" id="ap4" value="תוכנה במחשב"><label for="ap4">תוכנה במחשב</label></div>
+            <div class="choice"><input type="radio" name="appPlatform" id="ap5" value="כמה מהאפשרויות"><label for="ap5">כמה מהאפשרויות</label></div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="q">מאיזה מכשירים בעיקר?</label>
+          <div class="choice-group" data-group="appDevice">
+            <div class="choice"><input type="radio" name="appDevice" id="ad1" value="מחשב"><label for="ad1">מחשב</label></div>
+            <div class="choice"><input type="radio" name="appDevice" id="ad2" value="טלפון"><label for="ad2">טלפון</label></div>
+            <div class="choice"><input type="radio" name="appDevice" id="ad3" value="הכל"><label for="ad3">הכל</label></div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="q">צריך התחברות עם משתמש וסיסמה?</label>
+          <div class="choice-group" data-group="appLogin">
+            <div class="choice"><input type="radio" name="appLogin" id="al1" value="כן"><label for="al1">כן</label></div>
+            <div class="choice"><input type="radio" name="appLogin" id="al2" value="לא"><label for="al2">לא</label></div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="q" for="appScreens">2–3 מסכים עיקריים שאתם מדמיינים</label>
+          <textarea id="appScreens" name="appScreens"></textarea>
+        </div>
+      </div>
+
+      <!-- automation block -->
+      <div class="type-block" data-type-block="אוטומציה">
+        <div class="field">
+          <label class="q">מה קורה לנתונים באמצע?</label>
+          <div class="choice-group" data-group="autoProcess">
+            <div class="choice"><input type="checkbox" name="autoProcess" id="apr1" value="סינון"><label for="apr1">סינון</label></div>
+            <div class="choice"><input type="checkbox" name="autoProcess" id="apr2" value="חישוב"><label for="apr2">חישוב</label></div>
+            <div class="choice"><input type="checkbox" name="autoProcess" id="apr3" value="השוואה"><label for="apr3">השוואה</label></div>
+            <div class="choice"><input type="checkbox" name="autoProcess" id="apr4" value="מיזוג קבצים"><label for="apr4">מיזוג קבצים</label></div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="q" for="autoRules">יש כללים מיוחדים? (אם עמודה ריקה — לדלג / לסמן / לעצור)</label>
+          <textarea id="autoRules" name="autoRules"></textarea>
+        </div>
+        <div class="field">
+          <label class="q">רץ ידנית בלחיצת כפתור, או לבד לפי לו"ז?</label>
+          <div class="choice-group" data-group="autoTrigger">
+            <div class="choice"><input type="radio" name="autoTrigger" id="at1" value="ידנית בלחיצת כפתור"><label for="at1">ידנית בלחיצת כפתור</label></div>
+            <div class="choice"><input type="radio" name="autoTrigger" id="at2" value="אוטומטי לפי לו&quot;ז"><label for="at2">אוטומטי לפי לו"ז</label></div>
+          </div>
+          <input type="text" class="subfield" data-show-if="autoTrigger=אוטומטי לפי לו&quot;ז" name="autoScheduleDetails" placeholder="כל בוקר / כל שעה / אחר...">
+        </div>
+        <div class="field">
+          <label class="q" for="autoWhere">איפה זה ירוץ ומול אילו קבצים/מערכות?</label>
+          <textarea id="autoWhere" name="autoWhere" placeholder="מחשב, כונן משותף, SharePoint..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- extra -->
+    <div class="card">
+      <h2><span class="num">•</span> משהו שלא שאלנו?</h2>
+      <div class="field">
+        <textarea name="extraNotes" placeholder="כל דבר נוסף שכדאי שנדע..."></textarea>
+      </div>
+    </div>
+
+    <button type="submit" id="submitBtn">שליחת האפיון</button>
+    <p class="status-msg error" id="errorMsg">משהו השתבש בשליחה. אפשר לנסות שוב, או לשלוח ישירות למייל uriiron20@gmail.com.</p>
+  </form>
+
+  <div id="successScreen">
+    <div class="icon">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    </div>
+    <h2>האפיון נשלח בהצלחה!</h2>
+    <p>תודה על הפירוט. קיבלנו את הנתונים ונחזור אליכם בקרוב להמשך העבודה.</p>
+  </div>
+</main>
+
+<footer>שאלון אפיון פרויקט</footer>
+
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+/* ====================================================================
+   הגדרות EmailJS — יש למלא לפני שהטופס יעבוד:
+   1. הירשמו בחינם ב-https://www.emailjs.com
+   2. חברו שירות מייל (Gmail) → תקבלו SERVICE_ID
+   3. צרו Email Template → תקבלו TEMPLATE_ID
+      בגוף התבנית השתמשו במשתנה {{message}} להצגת כל התשובות,
+      וב-To Email הגדירו: uriiron20@gmail.com
+   4. ב-Account → General תמצאו את ה-PUBLIC_KEY
+   5. הציבו את שלושת הערכים כאן למטה:
+==================================================================== */
+const EMAILJS_PUBLIC_KEY  = "3C9X5Ur2q1tR8d3Kp";
+const EMAILJS_SERVICE_ID  = "service_re0k9tl";
+const EMAILJS_TEMPLATE_ID = "template_vfhok9h";
+
+emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+
+// --- progress bar ---
+window.addEventListener("scroll", () => {
+  const h = document.documentElement;
+  const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+  document.getElementById("progressFill").style.width = scrolled + "%";
+});
+
+// --- conditional sub-fields (text shown only if a specific choice is picked) ---
+document.querySelectorAll(".subfield[data-show-if]").forEach(sub => {
+  const [groupName, expected] = sub.dataset.showIf.split("=");
+  const inputs = document.querySelectorAll(`input[name="${groupName}"]`);
+  inputs.forEach(inp => {
+    inp.addEventListener("change", () => {
+      const checked = document.querySelector(`input[name="${groupName}"]:checked`);
+      sub.classList.toggle("show", !!checked && checked.value === expected);
+    });
+  });
+});
+
+// --- project type blocks ---
+document.querySelectorAll('input[name="projectType"]').forEach(inp => {
+  inp.addEventListener("change", () => {
+    document.querySelectorAll(".type-block").forEach(block => {
+      block.classList.toggle("show", block.dataset.typeBlock === inp.value);
+    });
+  });
+});
+
+// --- build a readable summary for the email body ---
+function buildSummary(form){
+  const fd = new FormData(form);
+  const groups = {};
+  for (const [key, value] of fd.entries()){
+    if (!value) continue;
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(value);
+  }
+  const label = {
+    contactName:"שם מלא", contactPhone:"טלפון", contactEmail:"אימייל", companyName:"שם עסק/חברה",
+    oneLiner:"תיאור במשפט אחד", today:"איך נעשה היום", todayOther:"פירוט (איך נעשה היום)",
+    pain:"הבעיה הכואבת", painDetails:"פירוט (בעיה כואבת)",
+    users:"מי המשתמשים", usersCount:"כמה משתמשים", permissions:"הרשאות שונות", permissionsDetails:"פירוט הרשאות",
+    mainActions:"3-5 דברים עיקריים", mustHave:"הדבר הכי חשוב",
+    dataIn:"מה נכנס", dataSource:"מאיפה מגיע", dataOut:"מה רוצים לקבל", dataPersist:"שמירת מידע",
+    integrations:"חיבורים לכלים", hasDeadline:"יש דדליין", deadlineDetails:"פרטי דדליין",
+    hasBudget:"יש תקציב", budgetDetails:"פרטי תקציב", hasTechConstraint:"מגבלת טכנולוגיה", techConstraintDetails:"פירוט מגבלת טכנולוגיה",
+    successLook:"איך נראית הצלחה", mustNotHappen:"מה אסור שיקרה", mustNotHappenDetails:"פירוט",
+    projectType:"סוג הפרויקט",
+    siteGoal:"מטרת האתר", sitePages:"עמודים", siteBranding:"מיתוג/השראה", siteNeeds:"צרכים נוספים באתר",
+    appPlatform:"פלטפורמה", appDevice:"מכשירים", appLogin:"התחברות משתמשים", appScreens:"מסכים עיקריים",
+    autoProcess:"עיבוד נתונים", autoRules:"כללים מיוחדים", autoTrigger:"הפעלה", autoScheduleDetails:"תדירות", autoWhere:"סביבת הרצה",
+    extraNotes:"הערות נוספות"
+  };
+  let lines = [];
+  Object.keys(label).forEach(key => {
+    if (groups[key]) lines.push(`${label[key]}: ${groups[key].join(", ")}`);
+  });
+  return lines.join("\n");
+}
+
+// --- submit handler ---
+const form = document.getElementById("briefForm");
+const submitBtn = document.getElementById("submitBtn");
+const errorMsg = document.getElementById("errorMsg");
+
+form.addEventListener("submit", function(e){
+  e.preventDefault();
+  errorMsg.classList.remove("show");
+  submitBtn.disabled = true;
+  submitBtn.textContent = "שולח...";
+
+  const templateParams = {
+    from_name: document.getElementById("contactName").value,
+    from_email: document.getElementById("contactEmail").value || "לא צוין",
+    from_phone: document.getElementById("contactPhone").value,
+    to_email: "uriiron20@gmail.com",
+    message: buildSummary(form)
+  };
+
+  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+    .then(() => {
+      form.style.display = "none";
+      document.getElementById("successScreen").classList.add("show");
+      window.scrollTo({top:0, behavior:"smooth"});
+    })
+    .catch((err) => {
+      console.error("EmailJS error:", err);
+      errorMsg.classList.add("show");
+      submitBtn.disabled = false;
+      submitBtn.textContent = "שליחת האפיון";
+    });
+});
+</script>
+</body>
+</html>
