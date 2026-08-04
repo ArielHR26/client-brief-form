@@ -177,7 +177,7 @@
 
   .type-selector{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+    grid-template-columns:repeat(4,1fr);
     gap:10px;
   }
   .type-selector .choice label{
@@ -188,7 +188,10 @@
     font-weight:600;
     text-align:center;
   }
-  @media (max-width:480px){
+  @media (max-width:600px){
+    .type-selector{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:380px){
     .type-selector{grid-template-columns:1fr;}
   }
 
@@ -492,6 +495,7 @@
           <div class="choice"><input type="radio" name="projectType" id="pt1" value="אתר"><label for="pt1">🌐 אתר</label></div>
           <div class="choice"><input type="radio" name="projectType" id="pt2" value="אפליקציה"><label for="pt2">📱 אפליקציה</label></div>
           <div class="choice"><input type="radio" name="projectType" id="pt3" value="אוטומציה"><label for="pt3">⚙️ אוטומציה</label></div>
+          <div class="choice"><input type="radio" name="projectType" id="pt4" value="BI / דשבורד"><label for="pt4">📊 BI / דשבורד</label></div>
         </div>
       </div>
 
@@ -585,6 +589,84 @@
         <div class="field">
           <label class="q" for="autoWhere">איפה זה ירוץ ומול אילו קבצים/מערכות?</label>
           <textarea id="autoWhere" name="autoWhere" placeholder="מחשב, כונן משותף, SharePoint..."></textarea>
+        </div>
+      </div>
+
+      <!-- BI / dashboard block -->
+      <div class="type-block" data-type-block="BI / דשבורד">
+        <div class="field">
+          <label class="q" for="biSources">מה שמות מקורות המידע (הדוחות) שיזינו את הדשבורד?</label>
+          <textarea id="biSources" name="biSources" placeholder="לדוגמה: דוח מכירות מ-Excel, טבלת CRM, ERP, Google Sheets, מסד נתונים, API..."></textarea>
+        </div>
+        <div class="field">
+          <label class="q">באיזו תדירות כל דוח/מקור מתעדכן בפועל?</label>
+          <div class="choice-group" data-group="biFrequency">
+            <div class="choice"><input type="radio" name="biFrequency" id="bf1" value="בזמן אמת"><label for="bf1">בזמן אמת</label></div>
+            <div class="choice"><input type="radio" name="biFrequency" id="bf2" value="כל שעה"><label for="bf2">כל שעה</label></div>
+            <div class="choice"><input type="radio" name="biFrequency" id="bf3" value="יומי"><label for="bf3">יומי</label></div>
+            <div class="choice"><input type="radio" name="biFrequency" id="bf4" value="שבועי"><label for="bf4">שבועי</label></div>
+            <div class="choice"><input type="radio" name="biFrequency" id="bf5" value="חודשי"><label for="bf5">חודשי</label></div>
+            <div class="choice"><input type="radio" name="biFrequency" id="bf6" value="ידני"><label for="bf6">ידני</label></div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="q" for="biKpis">אילו מדדים (KPIs) הכי מעניינים אתכם לראות? (2–5 מדדים עיקריים)</label>
+          <textarea id="biKpis" name="biKpis" placeholder="לדוגמה: הכנסות, אחוז צמיחה, זמן טיפול בפנייה, שיעור נטישה..."></textarea>
+        </div>
+        <div class="field">
+          <label class="q">באיזו רמת פירוט (Grain) רוצים לראות את הנתונים?</label>
+          <div class="choice-group" data-group="biGrain">
+            <div class="choice"><input type="checkbox" name="biGrain" id="bg1" value="יום"><label for="bg1">יום</label></div>
+            <div class="choice"><input type="checkbox" name="biGrain" id="bg2" value="שבוע"><label for="bg2">שבוע</label></div>
+            <div class="choice"><input type="checkbox" name="biGrain" id="bg3" value="חודש"><label for="bg3">חודש</label></div>
+            <div class="choice"><input type="checkbox" name="biGrain" id="bg4" value="לפי סניף/עובד"><label for="bg4">לפי סניף/עובד</label></div>
+            <div class="choice"><input type="checkbox" name="biGrain" id="bg5" value="לפי לקוח/מוצר"><label for="bg5">לפי לקוח/מוצר</label></div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="q">צריך פילטרים, drill-down, או השוואה לתקופה קודמת/יעד?</label>
+          <div class="choice-group" data-group="biFeatures">
+            <div class="choice"><input type="checkbox" name="biFeatures" id="bft1" value="פילטרים"><label for="bft1">פילטרים</label></div>
+            <div class="choice"><input type="checkbox" name="biFeatures" id="bft2" value="Drill-down"><label for="bft2">Drill-down</label></div>
+            <div class="choice"><input type="checkbox" name="biFeatures" id="bft3" value="השוואה לתקופה קודמת"><label for="bft3">השוואה לתקופה קודמת</label></div>
+            <div class="choice"><input type="checkbox" name="biFeatures" id="bft4" value="השוואה ליעד"><label for="bft4">השוואה ליעד</label></div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="q">באיזה כלי זה ירוץ או יוצג?</label>
+          <div class="choice-group" data-group="biTool">
+            <div class="choice"><input type="radio" name="biTool" id="bt1" value="Power BI"><label for="bt1">Power BI</label></div>
+            <div class="choice"><input type="radio" name="biTool" id="bt2" value="Excel"><label for="bt2">Excel</label></div>
+            <div class="choice"><input type="radio" name="biTool" id="bt3" value="Looker Studio"><label for="bt3">Looker Studio</label></div>
+            <div class="choice"><input type="radio" name="biTool" id="bt4" value="Tableau"><label for="bt4">Tableau</label></div>
+            <div class="choice"><input type="radio" name="biTool" id="bt5" value="דשבורד מותאם אישית"><label for="bt5">דשבורד מותאם אישית</label></div>
+            <div class="choice"><input type="radio" name="biTool" id="bt6" value="לא יודע/ת"><label for="bt6">לא יודע/ת</label></div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="q">צריך הרשאות שונות — מי רואה מה?</label>
+          <div class="choice-group" data-group="biPermissions">
+            <div class="choice"><input type="radio" name="biPermissions" id="bp1" value="כן"><label for="bp1">כן</label></div>
+            <div class="choice"><input type="radio" name="biPermissions" id="bp2" value="לא, כולם רואים הכל"><label for="bp2">לא, כולם רואים הכל</label></div>
+          </div>
+          <textarea class="subfield" data-show-if="biPermissions=כן" name="biPermissionsDetails" placeholder="פרטו מי רואה מה..."></textarea>
+        </div>
+        <div class="field">
+          <label class="q">צריך התראה כשמדד חורג מסף מסוים?</label>
+          <div class="choice-group" data-group="biAlerts">
+            <div class="choice"><input type="radio" name="biAlerts" id="ba1" value="כן"><label for="ba1">כן</label></div>
+            <div class="choice"><input type="radio" name="biAlerts" id="ba2" value="לא"><label for="ba2">לא</label></div>
+          </div>
+          <input type="text" class="subfield" data-show-if="biAlerts=כן" name="biAlertsDetails" placeholder="למי ובאיזה ערוץ (מייל/וואטסאפ)?">
+        </div>
+        <div class="field">
+          <label class="q">איפה זה ייצפה בעיקר, וצריך ייצוא או שיתוף?</label>
+          <div class="choice-group" data-group="biDevice">
+            <div class="choice"><input type="checkbox" name="biDevice" id="bd1" value="מחשב"><label for="bd1">מחשב</label></div>
+            <div class="choice"><input type="checkbox" name="biDevice" id="bd2" value="נייד"><label for="bd2">נייד</label></div>
+            <div class="choice"><input type="checkbox" name="biDevice" id="bd3" value="ייצוא ל-PDF/Excel"><label for="bd3">ייצוא ל-PDF/Excel</label></div>
+            <div class="choice"><input type="checkbox" name="biDevice" id="bd4" value="שיתוף עם גורמים נוספים"><label for="bd4">שיתוף עם גורמים נוספים</label></div>
+          </div>
         </div>
       </div>
     </div>
@@ -682,6 +764,10 @@ function buildSummary(form){
     siteGoal:"מטרת האתר", sitePages:"עמודים", siteBranding:"מיתוג/השראה", siteNeeds:"צרכים נוספים באתר",
     appPlatform:"פלטפורמה", appDevice:"מכשירים", appLogin:"התחברות משתמשים", appScreens:"מסכים עיקריים",
     autoProcess:"עיבוד נתונים", autoRules:"כללים מיוחדים", autoTrigger:"הפעלה", autoScheduleDetails:"תדירות", autoWhere:"סביבת הרצה",
+    biSources:"מקורות מידע / דוחות", biFrequency:"תדירות עדכון הדוח", biKpis:"מדדים (KPIs) מעניינים",
+    biGrain:"רמת פירוט (Grain)", biFeatures:"פילטרים / drill-down / השוואה", biTool:"כלי BI",
+    biPermissions:"הרשאות שונות", biPermissionsDetails:"פירוט הרשאות", biAlerts:"התראה על חריגת סף",
+    biAlertsDetails:"פרטי התראה", biDevice:"תצוגה / ייצוא / שיתוף",
     extraNotes:"הערות נוספות"
   };
   let lines = [];
