@@ -294,200 +294,9 @@
       </div>
     </div>
 
-    <!-- 1 -->
+    <!-- 1 project type -->
     <div class="card">
-      <h2><span class="num">1</span> מה ולמה</h2>
-
-      <div class="field">
-        <label class="q" for="oneLiner">תארו במשפט אחד: "משהו ש___ בשביל ___"</label>
-        <input type="text" id="oneLiner" name="oneLiner" placeholder="לדוגמה: משהו שמנהל לי הזמנות בשביל שלא אאבד לקוחות">
-      </div>
-      <div class="field">
-        <label class="q">איך זה נעשה היום, בלי המערכת?</label>
-        <div class="choice-group" data-group="today">
-          <div class="choice"><input type="radio" name="today" id="today1" value="אקסל ידני"><label for="today1">אקסל ידני</label></div>
-          <div class="choice"><input type="radio" name="today" id="today2" value="נייר"><label for="today2">נייר</label></div>
-          <div class="choice"><input type="radio" name="today" id="today3" value="וואטסאפ"><label for="today3">וואטסאפ</label></div>
-          <div class="choice"><input type="radio" name="today" id="today4" value="כלום"><label for="today4">כלום</label></div>
-          <div class="choice"><input type="radio" name="today" id="today5" value="אחר"><label for="today5">אחר</label></div>
-        </div>
-        <textarea class="subfield" data-show-if="today=אחר" name="todayOther" placeholder="פרטו..."></textarea>
-      </div>
-      <div class="field">
-        <label class="q">מה הבעיה הכי כואבת שגורמת לכם לרצות את זה?</label>
-        <div class="choice-group" data-group="pain">
-          <div class="choice"><input type="checkbox" name="pain" id="pain1" value="בזבוז זמן"><label for="pain1">בזבוז זמן</label></div>
-          <div class="choice"><input type="checkbox" name="pain" id="pain2" value="טעויות"><label for="pain2">טעויות</label></div>
-          <div class="choice"><input type="checkbox" name="pain" id="pain3" value="בלגן וחוסר סדר"><label for="pain3">בלגן וחוסר סדר</label></div>
-          <div class="choice"><input type="checkbox" name="pain" id="pain4" value="חוויית לקוחות"><label for="pain4">חוויית לקוחות</label></div>
-          <div class="choice"><input type="checkbox" name="pain" id="pain5" value="אחר"><label for="pain5">אחר</label></div>
-        </div>
-        <textarea name="painDetails" placeholder="פרטים נוספים (לא חובה)"></textarea>
-      </div>
-    </div>
-
-    <!-- 2 -->
-    <div class="card">
-      <h2><span class="num">2</span> מי משתמש</h2>
-
-      <div class="field">
-        <label class="q">מי המשתמשים?</label>
-        <div class="choice-group" data-group="users">
-          <div class="choice"><input type="radio" name="users" id="users1" value="אני בלבד"><label for="users1">אני בלבד</label></div>
-          <div class="choice"><input type="radio" name="users" id="users2" value="צוות"><label for="users2">צוות</label></div>
-          <div class="choice"><input type="radio" name="users" id="users3" value="הלקוחות שלי"><label for="users3">הלקוחות שלי</label></div>
-          <div class="choice"><input type="radio" name="users" id="users4" value="הציבור הרחב"><label for="users4">הציבור הרחב</label></div>
-        </div>
-      </div>
-      <div class="field">
-        <label class="q" for="usersCount">כמה בערך?</label>
-        <select id="usersCount" name="usersCount">
-          <option value="">בחרו...</option>
-          <option value="1">1</option>
-          <option value="2-5">2–5</option>
-          <option value="6-20">6–20</option>
-          <option value="21-50">21–50</option>
-          <option value="מאות">מאות</option>
-          <option value="אלפים ומעלה">אלפים ומעלה</option>
-          <option value="לא יודע/ת">לא יודע/ת</option>
-        </select>
-      </div>
-      <div class="field">
-        <label class="q">יש סוגי משתמשים עם הרשאות שונות? (מנהל שרואה הכל מול עובד שרואה חלק)</label>
-        <div class="choice-group" data-group="permissions">
-          <div class="choice"><input type="radio" name="permissions" id="perm1" value="כן"><label for="perm1">כן</label></div>
-          <div class="choice"><input type="radio" name="permissions" id="perm2" value="לא"><label for="perm2">לא</label></div>
-          <div class="choice"><input type="radio" name="permissions" id="perm3" value="לא יודע/ת"><label for="perm3">לא יודע/ת</label></div>
-        </div>
-        <textarea class="subfield" data-show-if="permissions=כן" name="permissionsDetails" placeholder="פרטו את סוגי המשתמשים וההרשאות..."></textarea>
-      </div>
-    </div>
-
-    <!-- 3 -->
-    <div class="card">
-      <h2><span class="num">3</span> מה זה צריך לעשות</h2>
-
-      <div class="field">
-        <label class="q" for="mainActions">3–5 הדברים העיקריים שיקרו כאן</label>
-        <textarea id="mainActions" name="mainActions" placeholder="לדוגמה: להוסיף לקוח, להפיק דוח, לשלוח הזמנה..."></textarea>
-      </div>
-      <div class="field">
-        <label class="q" for="mustHave">אם רק דבר אחד יעבוד — מה הוא? (הכי חשוב)</label>
-        <input type="text" id="mustHave" name="mustHave">
-      </div>
-    </div>
-
-    <!-- 4 -->
-    <div class="card">
-      <h2><span class="num">4</span> נתונים — מה נכנס ומה יוצא</h2>
-
-      <div class="field">
-        <label class="q">מה נכנס למערכת?</label>
-        <div class="choice-group" data-group="dataIn">
-          <div class="choice"><input type="checkbox" name="dataIn" id="dataIn1" value="טקסט שמקלידים"><label for="dataIn1">טקסט שמקלידים</label></div>
-          <div class="choice"><input type="checkbox" name="dataIn" id="dataIn2" value="קבצים"><label for="dataIn2">קבצים</label></div>
-          <div class="choice"><input type="checkbox" name="dataIn" id="dataIn3" value="תמונות"><label for="dataIn3">תמונות</label></div>
-          <div class="choice"><input type="checkbox" name="dataIn" id="dataIn4" value="מקור נתונים אחר"><label for="dataIn4">מקור נתונים אחר</label></div>
-        </div>
-      </div>
-      <div class="field">
-        <label class="q">מאיפה זה מגיע?</label>
-        <div class="choice-group" data-group="dataSource">
-          <div class="choice"><input type="radio" name="dataSource" id="src1" value="הקלדה ידנית"><label for="src1">הקלדה ידנית</label></div>
-          <div class="choice"><input type="radio" name="dataSource" id="src2" value="אקסל"><label for="src2">אקסל</label></div>
-          <div class="choice"><input type="radio" name="dataSource" id="src3" value="מערכת אחרת"><label for="src3">מערכת אחרת</label></div>
-          <div class="choice"><input type="radio" name="dataSource" id="src4" value="מייל"><label for="src4">מייל</label></div>
-          <div class="choice"><input type="radio" name="dataSource" id="src5" value="אתר"><label for="src5">אתר</label></div>
-        </div>
-      </div>
-      <div class="field">
-        <label class="q">מה רוצים לקבל בסוף?</label>
-        <div class="choice-group" data-group="dataOut">
-          <div class="choice"><input type="checkbox" name="dataOut" id="out1" value="רשימה על מסך"><label for="out1">רשימה על מסך</label></div>
-          <div class="choice"><input type="checkbox" name="dataOut" id="out2" value="דוח"><label for="out2">דוח</label></div>
-          <div class="choice"><input type="checkbox" name="dataOut" id="out3" value="קובץ"><label for="out3">קובץ</label></div>
-          <div class="choice"><input type="checkbox" name="dataOut" id="out4" value="מייל"><label for="out4">מייל</label></div>
-          <div class="choice"><input type="checkbox" name="dataOut" id="out5" value="הודעה"><label for="out5">הודעה</label></div>
-        </div>
-      </div>
-      <div class="field">
-        <label class="q">המידע צריך להישמר לאורך זמן?</label>
-        <div class="choice-group" data-group="dataPersist">
-          <div class="choice"><input type="radio" name="dataPersist" id="pers1" value="כן, לאורך זמן"><label for="pers1">כן, לאורך זמן</label></div>
-          <div class="choice"><input type="radio" name="dataPersist" id="pers2" value="לא, חד־פעמי"><label for="pers2">לא, חד־פעמי</label></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 5 -->
-    <div class="card">
-      <h2><span class="num">5</span> חיבורים ומגבלות</h2>
-
-      <div class="field">
-        <label class="q">צריך להתחבר לכלים קיימים?</label>
-        <div class="choice-group" data-group="integrations">
-          <div class="choice"><input type="checkbox" name="integrations" id="int1" value="אקסל"><label for="int1">אקסל</label></div>
-          <div class="choice"><input type="checkbox" name="integrations" id="int2" value="Google"><label for="int2">Google</label></div>
-          <div class="choice"><input type="checkbox" name="integrations" id="int3" value="וואטסאפ"><label for="int3">וואטסאפ</label></div>
-          <div class="choice"><input type="checkbox" name="integrations" id="int4" value="מייל"><label for="int4">מייל</label></div>
-          <div class="choice"><input type="checkbox" name="integrations" id="int5" value="Power BI"><label for="int5">Power BI</label></div>
-          <div class="choice"><input type="checkbox" name="integrations" id="int6" value="סליקה"><label for="int6">סליקה</label></div>
-          <div class="choice"><input type="checkbox" name="integrations" id="int7" value="CRM"><label for="int7">CRM</label></div>
-          <div class="choice"><input type="checkbox" name="integrations" id="int8" value="לא צריך"><label for="int8">לא צריך</label></div>
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="q">יש דדליין?</label>
-        <div class="choice-group" data-group="hasDeadline">
-          <div class="choice"><input type="radio" name="hasDeadline" id="dl1" value="כן"><label for="dl1">כן</label></div>
-          <div class="choice"><input type="radio" name="hasDeadline" id="dl2" value="לא"><label for="dl2">לא</label></div>
-        </div>
-        <input type="text" class="subfield" data-show-if="hasDeadline=כן" name="deadlineDetails" placeholder="עד מתי בערך?">
-      </div>
-
-      <div class="field">
-        <label class="q">יש תקציב מוגדר?</label>
-        <div class="choice-group" data-group="hasBudget">
-          <div class="choice"><input type="radio" name="hasBudget" id="bg1" value="כן"><label for="bg1">כן</label></div>
-          <div class="choice"><input type="radio" name="hasBudget" id="bg2" value="לא"><label for="bg2">לא</label></div>
-        </div>
-        <input type="text" class="subfield" data-show-if="hasBudget=כן" name="budgetDetails" placeholder="טווח תקציב משוער">
-      </div>
-
-      <div class="field">
-        <label class="q">יש טכנולוגיה שחייבים / אסור להשתמש בה?</label>
-        <div class="choice-group" data-group="hasTechConstraint">
-          <div class="choice"><input type="radio" name="hasTechConstraint" id="tc1" value="כן"><label for="tc1">כן</label></div>
-          <div class="choice"><input type="radio" name="hasTechConstraint" id="tc2" value="לא"><label for="tc2">לא</label></div>
-        </div>
-        <textarea class="subfield" data-show-if="hasTechConstraint=כן" name="techConstraintDetails" placeholder="פרטו..."></textarea>
-      </div>
-    </div>
-
-    <!-- 6 -->
-    <div class="card">
-      <h2><span class="num">6</span> איך נדע שהצליח</h2>
-
-      <div class="field">
-        <label class="q" for="successLook">איך ייראה אם הכל עבד מושלם? מה ישתנה ביום־יום?</label>
-        <textarea id="successLook" name="successLook"></textarea>
-      </div>
-      <div class="field">
-        <label class="q">מה אסור שיקרה בשום מקרה?</label>
-        <div class="choice-group" data-group="mustNotHappen">
-          <div class="choice"><input type="checkbox" name="mustNotHappen" id="mnh1" value="איבוד מידע"><label for="mnh1">איבוד מידע</label></div>
-          <div class="choice"><input type="checkbox" name="mustNotHappen" id="mnh2" value="טעות מול לקוח"><label for="mnh2">טעות מול לקוח</label></div>
-          <div class="choice"><input type="checkbox" name="mustNotHappen" id="mnh3" value="כפילות"><label for="mnh3">כפילות</label></div>
-          <div class="choice"><input type="checkbox" name="mustNotHappen" id="mnh4" value="אחר"><label for="mnh4">אחר</label></div>
-        </div>
-        <textarea name="mustNotHappenDetails" placeholder="פרטים נוספים (לא חובה)"></textarea>
-      </div>
-    </div>
-
-    <!-- 7 project type -->
-    <div class="card">
-      <h2><span class="num">7</span> סוג הפרויקט</h2>
+      <h2><span class="num">1</span> סוג הפרויקט</h2>
       <p class="hint">בחרו את הסוג המתאים — יופיעו שאלות ממוקדות בהתאם.</p>
 
       <div class="field">
@@ -668,6 +477,197 @@
             <div class="choice"><input type="checkbox" name="biDevice" id="bd4" value="שיתוף עם גורמים נוספים"><label for="bd4">שיתוף עם גורמים נוספים</label></div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="card">
+      <h2><span class="num">2</span> מה ולמה</h2>
+
+      <div class="field">
+        <label class="q" for="oneLiner">תארו במשפט אחד: "משהו ש___ בשביל ___"</label>
+        <input type="text" id="oneLiner" name="oneLiner" placeholder="לדוגמה: משהו שמנהל לי הזמנות בשביל שלא אאבד לקוחות">
+      </div>
+      <div class="field">
+        <label class="q">איך זה נעשה היום, בלי המערכת?</label>
+        <div class="choice-group" data-group="today">
+          <div class="choice"><input type="radio" name="today" id="today1" value="אקסל ידני"><label for="today1">אקסל ידני</label></div>
+          <div class="choice"><input type="radio" name="today" id="today2" value="נייר"><label for="today2">נייר</label></div>
+          <div class="choice"><input type="radio" name="today" id="today3" value="וואטסאפ"><label for="today3">וואטסאפ</label></div>
+          <div class="choice"><input type="radio" name="today" id="today4" value="כלום"><label for="today4">כלום</label></div>
+          <div class="choice"><input type="radio" name="today" id="today5" value="אחר"><label for="today5">אחר</label></div>
+        </div>
+        <textarea class="subfield" data-show-if="today=אחר" name="todayOther" placeholder="פרטו..."></textarea>
+      </div>
+      <div class="field">
+        <label class="q">מה הבעיה הכי כואבת שגורמת לכם לרצות את זה?</label>
+        <div class="choice-group" data-group="pain">
+          <div class="choice"><input type="checkbox" name="pain" id="pain1" value="בזבוז זמן"><label for="pain1">בזבוז זמן</label></div>
+          <div class="choice"><input type="checkbox" name="pain" id="pain2" value="טעויות"><label for="pain2">טעויות</label></div>
+          <div class="choice"><input type="checkbox" name="pain" id="pain3" value="בלגן וחוסר סדר"><label for="pain3">בלגן וחוסר סדר</label></div>
+          <div class="choice"><input type="checkbox" name="pain" id="pain4" value="חוויית לקוחות"><label for="pain4">חוויית לקוחות</label></div>
+          <div class="choice"><input type="checkbox" name="pain" id="pain5" value="אחר"><label for="pain5">אחר</label></div>
+        </div>
+        <textarea name="painDetails" placeholder="פרטים נוספים (לא חובה)"></textarea>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="card">
+      <h2><span class="num">3</span> מי משתמש</h2>
+
+      <div class="field">
+        <label class="q">מי המשתמשים?</label>
+        <div class="choice-group" data-group="users">
+          <div class="choice"><input type="radio" name="users" id="users1" value="אני בלבד"><label for="users1">אני בלבד</label></div>
+          <div class="choice"><input type="radio" name="users" id="users2" value="צוות"><label for="users2">צוות</label></div>
+          <div class="choice"><input type="radio" name="users" id="users3" value="הלקוחות שלי"><label for="users3">הלקוחות שלי</label></div>
+          <div class="choice"><input type="radio" name="users" id="users4" value="הציבור הרחב"><label for="users4">הציבור הרחב</label></div>
+        </div>
+      </div>
+      <div class="field">
+        <label class="q" for="usersCount">כמה בערך?</label>
+        <select id="usersCount" name="usersCount">
+          <option value="">בחרו...</option>
+          <option value="1">1</option>
+          <option value="2-5">2–5</option>
+          <option value="6-20">6–20</option>
+          <option value="21-50">21–50</option>
+          <option value="מאות">מאות</option>
+          <option value="אלפים ומעלה">אלפים ומעלה</option>
+          <option value="לא יודע/ת">לא יודע/ת</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="q">יש סוגי משתמשים עם הרשאות שונות? (מנהל שרואה הכל מול עובד שרואה חלק)</label>
+        <div class="choice-group" data-group="permissions">
+          <div class="choice"><input type="radio" name="permissions" id="perm1" value="כן"><label for="perm1">כן</label></div>
+          <div class="choice"><input type="radio" name="permissions" id="perm2" value="לא"><label for="perm2">לא</label></div>
+          <div class="choice"><input type="radio" name="permissions" id="perm3" value="לא יודע/ת"><label for="perm3">לא יודע/ת</label></div>
+        </div>
+        <textarea class="subfield" data-show-if="permissions=כן" name="permissionsDetails" placeholder="פרטו את סוגי המשתמשים וההרשאות..."></textarea>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="card">
+      <h2><span class="num">4</span> מה זה צריך לעשות</h2>
+
+      <div class="field">
+        <label class="q" for="mainActions">3–5 הדברים העיקריים שיקרו כאן</label>
+        <textarea id="mainActions" name="mainActions" placeholder="לדוגמה: להוסיף לקוח, להפיק דוח, לשלוח הזמנה..."></textarea>
+      </div>
+      <div class="field">
+        <label class="q" for="mustHave">אם רק דבר אחד יעבוד — מה הוא? (הכי חשוב)</label>
+        <input type="text" id="mustHave" name="mustHave">
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="card">
+      <h2><span class="num">5</span> נתונים — מה נכנס ומה יוצא</h2>
+
+      <div class="field">
+        <label class="q">מה נכנס למערכת?</label>
+        <div class="choice-group" data-group="dataIn">
+          <div class="choice"><input type="checkbox" name="dataIn" id="dataIn1" value="טקסט שמקלידים"><label for="dataIn1">טקסט שמקלידים</label></div>
+          <div class="choice"><input type="checkbox" name="dataIn" id="dataIn2" value="קבצים"><label for="dataIn2">קבצים</label></div>
+          <div class="choice"><input type="checkbox" name="dataIn" id="dataIn3" value="תמונות"><label for="dataIn3">תמונות</label></div>
+          <div class="choice"><input type="checkbox" name="dataIn" id="dataIn4" value="מקור נתונים אחר"><label for="dataIn4">מקור נתונים אחר</label></div>
+        </div>
+      </div>
+      <div class="field">
+        <label class="q">מאיפה זה מגיע?</label>
+        <div class="choice-group" data-group="dataSource">
+          <div class="choice"><input type="radio" name="dataSource" id="src1" value="הקלדה ידנית"><label for="src1">הקלדה ידנית</label></div>
+          <div class="choice"><input type="radio" name="dataSource" id="src2" value="אקסל"><label for="src2">אקסל</label></div>
+          <div class="choice"><input type="radio" name="dataSource" id="src3" value="מערכת אחרת"><label for="src3">מערכת אחרת</label></div>
+          <div class="choice"><input type="radio" name="dataSource" id="src4" value="מייל"><label for="src4">מייל</label></div>
+          <div class="choice"><input type="radio" name="dataSource" id="src5" value="אתר"><label for="src5">אתר</label></div>
+        </div>
+      </div>
+      <div class="field">
+        <label class="q">מה רוצים לקבל בסוף?</label>
+        <div class="choice-group" data-group="dataOut">
+          <div class="choice"><input type="checkbox" name="dataOut" id="out1" value="רשימה על מסך"><label for="out1">רשימה על מסך</label></div>
+          <div class="choice"><input type="checkbox" name="dataOut" id="out2" value="דוח"><label for="out2">דוח</label></div>
+          <div class="choice"><input type="checkbox" name="dataOut" id="out3" value="קובץ"><label for="out3">קובץ</label></div>
+          <div class="choice"><input type="checkbox" name="dataOut" id="out4" value="מייל"><label for="out4">מייל</label></div>
+          <div class="choice"><input type="checkbox" name="dataOut" id="out5" value="הודעה"><label for="out5">הודעה</label></div>
+        </div>
+      </div>
+      <div class="field">
+        <label class="q">המידע צריך להישמר לאורך זמן?</label>
+        <div class="choice-group" data-group="dataPersist">
+          <div class="choice"><input type="radio" name="dataPersist" id="pers1" value="כן, לאורך זמן"><label for="pers1">כן, לאורך זמן</label></div>
+          <div class="choice"><input type="radio" name="dataPersist" id="pers2" value="לא, חד־פעמי"><label for="pers2">לא, חד־פעמי</label></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="card">
+      <h2><span class="num">6</span> חיבורים ומגבלות</h2>
+
+      <div class="field">
+        <label class="q">צריך להתחבר לכלים קיימים?</label>
+        <div class="choice-group" data-group="integrations">
+          <div class="choice"><input type="checkbox" name="integrations" id="int1" value="אקסל"><label for="int1">אקסל</label></div>
+          <div class="choice"><input type="checkbox" name="integrations" id="int2" value="Google"><label for="int2">Google</label></div>
+          <div class="choice"><input type="checkbox" name="integrations" id="int3" value="וואטסאפ"><label for="int3">וואטסאפ</label></div>
+          <div class="choice"><input type="checkbox" name="integrations" id="int4" value="מייל"><label for="int4">מייל</label></div>
+          <div class="choice"><input type="checkbox" name="integrations" id="int5" value="Power BI"><label for="int5">Power BI</label></div>
+          <div class="choice"><input type="checkbox" name="integrations" id="int6" value="סליקה"><label for="int6">סליקה</label></div>
+          <div class="choice"><input type="checkbox" name="integrations" id="int7" value="CRM"><label for="int7">CRM</label></div>
+          <div class="choice"><input type="checkbox" name="integrations" id="int8" value="לא צריך"><label for="int8">לא צריך</label></div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="q">יש דדליין?</label>
+        <div class="choice-group" data-group="hasDeadline">
+          <div class="choice"><input type="radio" name="hasDeadline" id="dl1" value="כן"><label for="dl1">כן</label></div>
+          <div class="choice"><input type="radio" name="hasDeadline" id="dl2" value="לא"><label for="dl2">לא</label></div>
+        </div>
+        <input type="text" class="subfield" data-show-if="hasDeadline=כן" name="deadlineDetails" placeholder="עד מתי בערך?">
+      </div>
+
+      <div class="field">
+        <label class="q">יש תקציב מוגדר?</label>
+        <div class="choice-group" data-group="hasBudget">
+          <div class="choice"><input type="radio" name="hasBudget" id="bg1" value="כן"><label for="bg1">כן</label></div>
+          <div class="choice"><input type="radio" name="hasBudget" id="bg2" value="לא"><label for="bg2">לא</label></div>
+        </div>
+        <input type="text" class="subfield" data-show-if="hasBudget=כן" name="budgetDetails" placeholder="טווח תקציב משוער">
+      </div>
+
+      <div class="field">
+        <label class="q">יש טכנולוגיה שחייבים / אסור להשתמש בה?</label>
+        <div class="choice-group" data-group="hasTechConstraint">
+          <div class="choice"><input type="radio" name="hasTechConstraint" id="tc1" value="כן"><label for="tc1">כן</label></div>
+          <div class="choice"><input type="radio" name="hasTechConstraint" id="tc2" value="לא"><label for="tc2">לא</label></div>
+        </div>
+        <textarea class="subfield" data-show-if="hasTechConstraint=כן" name="techConstraintDetails" placeholder="פרטו..."></textarea>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="card">
+      <h2><span class="num">7</span> איך נדע שהצליח</h2>
+
+      <div class="field">
+        <label class="q" for="successLook">איך ייראה אם הכל עבד מושלם? מה ישתנה ביום־יום?</label>
+        <textarea id="successLook" name="successLook"></textarea>
+      </div>
+      <div class="field">
+        <label class="q">מה אסור שיקרה בשום מקרה?</label>
+        <div class="choice-group" data-group="mustNotHappen">
+          <div class="choice"><input type="checkbox" name="mustNotHappen" id="mnh1" value="איבוד מידע"><label for="mnh1">איבוד מידע</label></div>
+          <div class="choice"><input type="checkbox" name="mustNotHappen" id="mnh2" value="טעות מול לקוח"><label for="mnh2">טעות מול לקוח</label></div>
+          <div class="choice"><input type="checkbox" name="mustNotHappen" id="mnh3" value="כפילות"><label for="mnh3">כפילות</label></div>
+          <div class="choice"><input type="checkbox" name="mustNotHappen" id="mnh4" value="אחר"><label for="mnh4">אחר</label></div>
+        </div>
+        <textarea name="mustNotHappenDetails" placeholder="פרטים נוספים (לא חובה)"></textarea>
       </div>
     </div>
 
