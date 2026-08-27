@@ -197,34 +197,77 @@
   בסוף המדריך יש סעיף שמסביר בדיוק מה פומבי כאן ומה לא, כי זו השאלה הראשונה שכולם שואלים.</p>
 
   <section class="block">
+    <h2>הקבצים</h2>
+    <p>הכל יושב בריפו אחד. אין צורך לבקש מאף אחד קובץ במייל.</p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>מה</th><th>קישור</th><th>מתי צריך</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>העתקה לחשבון שלכם</td>
+            <td><a href="https://github.com/ArielHR26/client-brief-form/generate">יצירת ריפו מהתבנית</a></td>
+            <td>המסלול המומלץ, שלב 1</td>
+          </tr>
+          <tr>
+            <td>הורדת הקבצים כ-ZIP</td>
+            <td><a href="https://github.com/ArielHR26/client-brief-form/archive/refs/heads/main.zip">main.zip</a></td>
+            <td>אם מעדיפים להעלות ידנית</td>
+          </tr>
+          <tr>
+            <td>הקובץ עצמו לצפייה</td>
+            <td><a href="https://github.com/ArielHR26/client-brief-form/blob/main/index.html">index.html</a></td>
+            <td>כדי להציץ לפני שמתחילים</td>
+          </tr>
+          <tr>
+            <td>הטופס באוויר, לדוגמה</td>
+            <td><a href="https://arielhr26.github.io/client-brief-form/">arielhr26.github.io/client-brief-form</a></td>
+            <td>ככה זה ייראה לפונה</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="block">
     <h2>ששת השלבים</h2>
   </section>
 
   <div class="step">
     <div class="step-num">1</div>
-    <div class="step-head"><h2>חשבון GitHub וריפו חדש</h2></div>
+    <div class="step-head"><h2>מעתיקים את הריפו לחשבון שלכם</h2></div>
     <div class="step-body">
       <ol class="plain">
-        <li>נרשמים ב-<a href="https://github.com/signup">github.com/signup</a>.</li>
-        <li>לוחצים <strong>New</strong> ויוצרים ריפו חדש. שם טוב: <code>project-brief</code>.</li>
-        <li>משאירים אותו <strong>Public</strong>.</li>
+        <li>אם עוד אין לכם חשבון GitHub, נרשמים ב-<a href="https://github.com/signup">github.com/signup</a>.</li>
+        <li>נכנסים ל-<a href="https://github.com/ArielHR26/client-brief-form/generate">קישור יצירת הריפו</a>.
+        זה פותח מסך שיוצר ריפו חדש בחשבון שלכם, כשקובץ הטופס כבר בתוכו.</li>
+        <li>נותנים שם. משהו כמו <code>project-brief</code> עובד.</li>
+        <li>בוחרים <strong>Public</strong> ולוחצים <strong>Create repository</strong>.</li>
       </ol>
       <div class="note">
         <span class="note-label">למה Public</span>
         <p>GitHub Pages, השירות שיהפוך את הקובץ לכתובת אינטרנט, לא עובד על ריפו פרטי בחשבון חינמי.
-        מה שיהיה פומבי זה קובץ הטופס עצמו, לא התשובות. פירוט מלא למטה.</p>
+        מה שיהיה פומבי זה קובץ הטופס, לא התשובות. פירוט מלא בסעיף אבטחת מידע למטה.</p>
+      </div>
+      <div class="note">
+        <span class="note-label">אפשרות אחרת</span>
+        <p>מי שמעדיף להעלות ידנית: מורידים את
+        <a href="https://github.com/ArielHR26/client-brief-form/archive/refs/heads/main.zip">main.zip</a>,
+        פותחים אותו, יוצרים ריפו חדש עם <strong>New</strong>, ואז
+        <strong>Add file → Upload files</strong> וגוררים את <code>index.html</code>.
+        התוצאה זהה, פשוט יותר קליקים.</p>
       </div>
     </div>
   </div>
 
   <div class="step">
     <div class="step-num">2</div>
-    <div class="step-head"><h2>מעלים את הקבצים</h2></div>
+    <div class="step-head"><h2>מוסיפים את הלוגו</h2></div>
     <div class="step-body">
-      <p>מקבלים מאורי את <code>index.html</code>. בריפו החדש: <strong>Add file → Upload files</strong>,
-      גוררים את הקובץ, <strong>Commit changes</strong>.</p>
-      <p>אם יש לכם לוגו, מעלים גם אותו באותה דרך. שמרו אותו בשם <code>logo.png</code>, PNG עם רקע
-      שקוף, ברוחב 400 פיקסלים בערך. תמונה של 4 מגה סתם מאטה את הטופס לפונה.</p>
+      <p>אם יש לכם לוגו: בריפו החדש <strong>Add file → Upload files</strong>, גוררים אותו,
+      <strong>Commit changes</strong>. שמרו אותו בשם <code>logo.png</code>, PNG עם רקע שקוף,
+      ברוחב 400 פיקסלים בערך. תמונה של 4 מגה סתם מאטה את הטופס לפונה.</p>
+      <p>אם אין לכם לוגו, דלגו על השלב הזה. בשלב 5 פשוט משאירים את שדה <code>logo</code> ריק,
+      ואז יוצג השם שלכם כטקסט.</p>
     </div>
   </div>
 
@@ -386,6 +429,13 @@
       <p>אין תשובה טובה לזה בגרסה הזאת. אם תגיעו למצב שהטופס נשלח לעשרות יחידות ואי אפשר לעקוב
       במייל, דברו עם אורי, כי זה כבר צריך פתרון אחר.</p>
     </details>
+    <details>
+      <summary>איפה המדריך הזה יושב?</summary>
+      <p>בכתובת <a href="https://arielhr26.github.io/client-brief-form/setup-guide.html">arielhr26.github.io/client-brief-form/setup-guide.html</a>,
+      באותו ריפו של הטופס. אפשר לשמור את הקישור, והוא יישאר תקף גם אחרי עדכונים.</p>
+    </details>
   </section>
+
+  <p class="kicker" style="margin-top:56px;">arielhr26.github.io/client-brief-form/setup-guide.html</p>
 
 </div>

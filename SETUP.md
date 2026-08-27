@@ -8,20 +8,38 @@
 צריך חשבון GitHub. אם אין לכם, זה השלב הראשון. בהמשך המדריך יש סעיף שמסביר מה בדיוק
 פומבי כאן ומה לא, כי זו השאלה הראשונה שכולם שואלים.
 
+גרסת עמוד של המדריך, נוחה יותר לקריאה ולשליחה:
+<https://arielhr26.github.io/client-brief-form/setup-guide.html>
+
 ---
 
-## שלב 1: חשבון GitHub וריפו חדש
+## הקבצים
 
-1. נכנסים ל-[github.com/signup](https://github.com/signup) ופותחים חשבון. הרשמה חינמית.
-2. אחרי ההרשמה לוחצים על **New** ויוצרים ריפו חדש (repository). קוראים לו למשל `project-brief`.
-3. חשוב: משאירים אותו **Public**. GitHub Pages לא עובד על ריפו פרטי בחשבון חינמי.
+| מה | קישור |
+|---|---|
+| העתקה לחשבון שלכם | <https://github.com/ArielHR26/client-brief-form/generate> |
+| הורדה כ-ZIP | <https://github.com/ArielHR26/client-brief-form/archive/refs/heads/main.zip> |
+| הקובץ לצפייה | <https://github.com/ArielHR26/client-brief-form/blob/main/index.html> |
+| הטופס באוויר, לדוגמה | <https://arielhr26.github.io/client-brief-form/> |
 
-## שלב 2: מעלים את הקבצים
+## שלב 1: מעתיקים את הריפו לחשבון שלכם
 
-1. מקבלים מאורי את `index.html`.
-2. בריפו החדש: **Add file → Upload files**, גוררים את `index.html`, ולוחצים **Commit changes**.
-3. אם יש לכם לוגו, מעלים גם אותו באותה דרך. שמרו אותו בשם `logo.png`, PNG עם רקע שקוף,
-   ברוחב 400 פיקסלים בערך. תמונה גדולה מזה סתם מאטה את הטופס.
+1. אם עוד אין לכם חשבון GitHub, נרשמים ב-[github.com/signup](https://github.com/signup). חינמי.
+2. נכנסים ל-<https://github.com/ArielHR26/client-brief-form/generate>. זה פותח מסך שיוצר ריפו חדש
+   בחשבון שלכם, כשקובץ הטופס כבר בתוכו.
+3. נותנים שם, למשל `project-brief`.
+4. בוחרים **Public** ולוחצים **Create repository**. GitHub Pages לא עובד על ריפו פרטי בחשבון חינמי.
+
+מי שמעדיף להעלות ידנית: מורידים את ה-ZIP מהטבלה למעלה, יוצרים ריפו חדש עם **New**, ואז
+**Add file → Upload files** וגוררים את `index.html`. התוצאה זהה.
+
+## שלב 2: מוסיפים את הלוגו
+
+אם יש לכם לוגו: בריפו החדש **Add file → Upload files**, גוררים אותו, **Commit changes**.
+שמרו אותו בשם `logo.png`, PNG עם רקע שקוף, ברוחב 400 פיקסלים בערך. תמונה גדולה מזה סתם מאטה
+את הטופס.
+
+אם אין לכם לוגו, דלגו על השלב. בשלב 5 משאירים את שדה `logo` ריק, ואז יוצג השם שלכם כטקסט.
 
 ## שלב 3: מדליקים את האתר
 
