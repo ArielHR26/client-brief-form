@@ -257,6 +257,48 @@
     html{scroll-behavior:auto;}
     *{transition:none !important;}
   }
+
+  /* brand block in hero */
+  .brand{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:14px;
+    margin-bottom:22px;
+  }
+  .brand img{
+    max-height:64px;
+    max-width:220px;
+    width:auto;
+    height:auto;
+    object-fit:contain;
+  }
+  .brand .wordmark{
+    font-size:20px;
+    font-weight:700;
+    letter-spacing:.01em;
+    padding:10px 18px;
+    border:1px solid rgba(255,255,255,.28);
+    border-radius:10px;
+  }
+  .owner-line{
+    margin-top:16px !important;
+    font-size:14px;
+    color:#94A3B8 !important;
+  }
+
+  /* icon + text stacked inside the type selector */
+  .type-selector .choice label{
+    flex-direction:column;
+    gap:8px;
+    line-height:1.3;
+  }
+  .type-selector .choice label svg{
+    width:22px;
+    height:22px;
+    stroke-width:1.6;
+    flex:0 0 auto;
+  }
 </style>
 </head>
 <body>
@@ -264,218 +306,405 @@
 <div id="progressBar"><div id="progressFill"></div></div>
 
 <header class="hero">
+  <div class="brand" id="brand"></div>
   <h1>שאלון אפיון פרויקט</h1>
-  <p>כמה דקות למילוי — ותוך כדי זה כבר מתחילים לתכנן ביחד. ככל שתפרטו יותר, כך נבנה משהו שמדויק יותר בשבילכם.</p>
+  <p>כמה דקות מילוי — ומהן יוצא אפיון שאפשר לעבוד לפיו. ככל שהתשובות מדויקות יותר, כך נגיע מהר יותר לדבר שבאמת עוזר ליחידה.</p>
+  <p class="owner-line" id="ownerLine"></p>
 </header>
 
 <main>
   <form id="briefForm">
 
-    <!-- contact -->
+    <!-- הפונה -->
     <div class="card">
-      <h2><span class="num">•</span> פרטי יצירת קשר</h2>
-      <p class="hint">כדי שנוכל לחזור אליכם עם המשך העבודה.</p>
+      <h2><span class="num">•</span> מי פונה</h2>
+      <p class="hint">כדי שנדע למי לחזור, ומי מחליט בסוף.</p>
 
       <div class="field">
         <label class="q" for="contactName">שם מלא<span class="required">*</span></label>
         <input type="text" id="contactName" name="contactName" required autocomplete="name" placeholder="לדוגמה: דנה כהן">
       </div>
       <div class="field">
-        <label class="q" for="contactPhone">טלפון<span class="required">*</span></label>
-        <input type="tel" id="contactPhone" name="contactPhone" required autocomplete="tel" placeholder="05X-XXXXXXX">
+        <label class="q" for="contactRole">תפקיד<span class="required">*</span></label>
+        <input type="text" id="contactRole" name="contactRole" required placeholder="לדוגמה: רכזת מנהלית">
       </div>
       <div class="field">
-        <label class="q" for="contactEmail">אימייל</label>
-        <input type="email" id="contactEmail" name="contactEmail" autocomplete="email" placeholder="name@example.com">
+        <label class="q" for="contactUnit">יחידה / פקולטה / אגף<span class="required">*</span></label>
+        <input type="text" id="contactUnit" name="contactUnit" required placeholder="לדוגמה: אגף משאבי אנוש">
       </div>
       <div class="field">
-        <label class="q" for="companyName">שם עסק / חברה (אם רלוונטי)</label>
-        <input type="text" id="companyName" name="companyName">
+        <label class="q" for="contactEmail">אימייל<span class="required">*</span></label>
+        <input type="email" id="contactEmail" name="contactEmail" required autocomplete="email" placeholder="name@ariel.ac.il">
+      </div>
+      <div class="field">
+        <label class="q" for="contactPhone">טלפון או שלוחה</label>
+        <input type="tel" id="contactPhone" name="contactPhone" autocomplete="tel" placeholder="שלוחה 1234 / 05X-XXXXXXX">
+      </div>
+      <div class="field">
+        <label class="q" for="approver">מי מאשר את הפרויקט מצד היחידה?</label>
+        <input type="text" id="approver" name="approver" placeholder="שם ותפקיד — מי אומר 'כן, זה מה שרצינו'">
+        <p class="hint">בלי גורם אחד שמחליט, פרויקט נתקע באמצע גם כשהכל נבנה נכון.</p>
       </div>
     </div>
 
-    <!-- 1 project type -->
+    <!-- 1 סוג הפרויקט -->
     <div class="card">
       <h2><span class="num">1</span> סוג הפרויקט</h2>
-      <p class="hint">בחרו את הסוג המתאים — יופיעו שאלות ממוקדות בהתאם.</p>
+      <p class="hint">בחרו את הסוג המתאים — ייפתחו שאלות ממוקדות בהתאם.</p>
 
       <div class="field">
         <div class="choice-group type-selector" data-group="projectType">
-          <div class="choice"><input type="radio" name="projectType" id="pt1" value="אתר"><label for="pt1">🌐 אתר</label></div>
-          <div class="choice"><input type="radio" name="projectType" id="pt2" value="אפליקציה"><label for="pt2">📱 אפליקציה</label></div>
-          <div class="choice"><input type="radio" name="projectType" id="pt3" value="אוטומציה"><label for="pt3">⚙️ אוטומציה</label></div>
-          <div class="choice"><input type="radio" name="projectType" id="pt4" value="BI / דשבורד"><label for="pt4">📊 BI / דשבורד</label></div>
-        </div>
-      </div>
-
-      <!-- website block -->
-      <div class="type-block" data-type-block="אתר">
-        <div class="field">
-          <label class="q">מה מטרת האתר?</label>
-          <div class="choice-group" data-group="siteGoal">
-            <div class="choice"><input type="radio" name="siteGoal" id="sg1" value="תדמית"><label for="sg1">תדמית</label></div>
-            <div class="choice"><input type="radio" name="siteGoal" id="sg2" value="מכירות"><label for="sg2">מכירות</label></div>
-            <div class="choice"><input type="radio" name="siteGoal" id="sg3" value="לידים"><label for="sg3">לידים</label></div>
-            <div class="choice"><input type="radio" name="siteGoal" id="sg4" value="מידע"><label for="sg4">מידע</label></div>
-            <div class="choice"><input type="radio" name="siteGoal" id="sg5" value="חנות"><label for="sg5">חנות</label></div>
+          <div class="choice">
+            <input type="radio" name="projectType" id="ptDash" value="דשבורד">
+            <label for="ptDash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15v-4"/><path d="M12 15V7"/><path d="M17 15v-6"/></svg>דשבורד או דוח</label>
           </div>
-        </div>
-        <div class="field">
-          <label class="q" for="sitePages">כמה עמודים בערך, ומה הם?</label>
-          <textarea id="sitePages" name="sitePages" placeholder="לדוגמה: בית, אודות, צור קשר, בלוג..."></textarea>
-        </div>
-        <div class="field">
-          <label class="q" for="siteBranding">יש לוגו, צבעים או מיתוג קיים? אתר שאהבתם ואחד שלא (קישור)</label>
-          <textarea id="siteBranding" name="siteBranding"></textarea>
-        </div>
-        <div class="field">
-          <label class="q">צריך ניהול תוכן עצמאי, טפסים, או תשלום אונליין?</label>
-          <div class="choice-group" data-group="siteNeeds">
-            <div class="choice"><input type="checkbox" name="siteNeeds" id="sn1" value="ניהול תוכן עצמאי"><label for="sn1">ניהול תוכן עצמאי</label></div>
-            <div class="choice"><input type="checkbox" name="siteNeeds" id="sn2" value="טפסים"><label for="sn2">טפסים</label></div>
-            <div class="choice"><input type="checkbox" name="siteNeeds" id="sn3" value="תשלום אונליין"><label for="sn3">תשלום אונליין</label></div>
-            <div class="choice"><input type="checkbox" name="siteNeeds" id="sn4" value="אף אחד מאלה"><label for="sn4">אף אחד מאלה</label></div>
+          <div class="choice">
+            <input type="radio" name="projectType" id="ptAuto" value="אוטומציה">
+            <label for="ptAuto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h9"/><path d="M11 11h9"/><path d="M4 15h9"/><circle cx="17" cy="7" r="2.2"/><circle cx="7" cy="11" r="2.2"/><circle cx="17" cy="15" r="2.2"/></svg>אוטומציה</label>
+          </div>
+          <div class="choice">
+            <input type="radio" name="projectType" id="ptSys" value="מערכת">
+            <label for="ptSys"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 9h6"/></svg>מערכת</label>
+          </div>
+          <div class="choice">
+            <input type="radio" name="projectType" id="ptSite" value="אתר">
+            <label for="ptSite"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.6 2.6 2.6 15.4 0 18"/><path d="M12 3c-2.6 2.6-2.6 15.4 0 18"/></svg>אתר</label>
           </div>
         </div>
       </div>
 
-      <!-- app block -->
-      <div class="type-block" data-type-block="אפליקציה">
+      <!-- ═══ דשבורד ═══ -->
+      <div class="type-block" data-type-block="דשבורד">
         <div class="field">
-          <label class="q">רצה בדפדפן, בטלפון, או בתוכנה במחשב?</label>
-          <div class="choice-group" data-group="appPlatform">
-            <div class="choice"><input type="radio" name="appPlatform" id="ap1" value="דפדפן"><label for="ap1">דפדפן</label></div>
-            <div class="choice"><input type="radio" name="appPlatform" id="ap2" value="אנדרואיד"><label for="ap2">אנדרואיד</label></div>
-            <div class="choice"><input type="radio" name="appPlatform" id="ap3" value="אייפון"><label for="ap3">אייפון</label></div>
-            <div class="choice"><input type="radio" name="appPlatform" id="ap4" value="תוכנה במחשב"><label for="ap4">תוכנה במחשב</label></div>
-            <div class="choice"><input type="radio" name="appPlatform" id="ap5" value="כמה מהאפשרויות"><label for="ap5">כמה מהאפשרויות</label></div>
+          <label class="q">זה דוח חד־פעמי, או משהו שצריך להתעדכן שוב ושוב?</label>
+          <div class="choice-group" data-group="dashKind">
+            <div class="choice"><input type="radio" name="dashKind" id="dk1" value="חד־פעמי"><label for="dk1">חד־פעמי — פעם אחת ודי</label></div>
+            <div class="choice"><input type="radio" name="dashKind" id="dk2" value="מתרענן"><label for="dk2">מתרענן — צריך להישאר מעודכן</label></div>
+            <div class="choice"><input type="radio" name="dashKind" id="dk3" value="לא יודע/ת"><label for="dk3">לא יודע/ת</label></div>
+          </div>
+          <div class="subfield" data-show-if="dashKind=מתרענן">
+            <label class="q">כל כמה זמן צריך להתעדכן?</label>
+            <div class="choice-group" data-group="dashRefresh">
+              <div class="choice"><input type="radio" name="dashRefresh" id="dr1" value="בזמן אמת"><label for="dr1">בזמן אמת</label></div>
+              <div class="choice"><input type="radio" name="dashRefresh" id="dr2" value="יומי"><label for="dr2">יומי</label></div>
+              <div class="choice"><input type="radio" name="dashRefresh" id="dr3" value="שבועי"><label for="dr3">שבועי</label></div>
+              <div class="choice"><input type="radio" name="dashRefresh" id="dr4" value="חודשי"><label for="dr4">חודשי</label></div>
+              <div class="choice"><input type="radio" name="dashRefresh" id="dr5" value="בכל סמסטר"><label for="dr5">בכל סמסטר</label></div>
+              <div class="choice"><input type="radio" name="dashRefresh" id="dr6" value="לפי בקשה"><label for="dr6">לפי בקשה</label></div>
+            </div>
           </div>
         </div>
-        <div class="field">
-          <label class="q">מאיזה מכשירים בעיקר?</label>
-          <div class="choice-group" data-group="appDevice">
-            <div class="choice"><input type="radio" name="appDevice" id="ad1" value="מחשב"><label for="ad1">מחשב</label></div>
-            <div class="choice"><input type="radio" name="appDevice" id="ad2" value="טלפון"><label for="ad2">טלפון</label></div>
-            <div class="choice"><input type="radio" name="appDevice" id="ad3" value="הכל"><label for="ad3">הכל</label></div>
-          </div>
-        </div>
-        <div class="field">
-          <label class="q">צריך התחברות עם משתמש וסיסמה?</label>
-          <div class="choice-group" data-group="appLogin">
-            <div class="choice"><input type="radio" name="appLogin" id="al1" value="כן"><label for="al1">כן</label></div>
-            <div class="choice"><input type="radio" name="appLogin" id="al2" value="לא"><label for="al2">לא</label></div>
-          </div>
-        </div>
-        <div class="field">
-          <label class="q" for="appScreens">2–3 מסכים עיקריים שאתם מדמיינים</label>
-          <textarea id="appScreens" name="appScreens"></textarea>
-        </div>
-      </div>
 
-      <!-- automation block -->
-      <div class="type-block" data-type-block="אוטומציה">
         <div class="field">
-          <label class="q">מה קורה לנתונים באמצע?</label>
-          <div class="choice-group" data-group="autoProcess">
-            <div class="choice"><input type="checkbox" name="autoProcess" id="apr1" value="סינון"><label for="apr1">סינון</label></div>
-            <div class="choice"><input type="checkbox" name="autoProcess" id="apr2" value="חישוב"><label for="apr2">חישוב</label></div>
-            <div class="choice"><input type="checkbox" name="autoProcess" id="apr3" value="השוואה"><label for="apr3">השוואה</label></div>
-            <div class="choice"><input type="checkbox" name="autoProcess" id="apr4" value="מיזוג קבצים"><label for="apr4">מיזוג קבצים</label></div>
-          </div>
+          <label class="q" for="dashKpis">אילו 2–5 מדדים אתם צריכים לראות?</label>
+          <textarea id="dashKpis" name="dashKpis" placeholder="לדוגמה: מספר סטודנטים רשומים, שיעור נשירה, זמן טיפול בפנייה, ניצול תקציב..."></textarea>
         </div>
-        <div class="field">
-          <label class="q" for="autoRules">יש כללים מיוחדים? (אם עמודה ריקה — לדלג / לסמן / לעצור)</label>
-          <textarea id="autoRules" name="autoRules"></textarea>
-        </div>
-        <div class="field">
-          <label class="q">רץ ידנית בלחיצת כפתור, או לבד לפי לו"ז?</label>
-          <div class="choice-group" data-group="autoTrigger">
-            <div class="choice"><input type="radio" name="autoTrigger" id="at1" value="ידנית בלחיצת כפתור"><label for="at1">ידנית בלחיצת כפתור</label></div>
-            <div class="choice"><input type="radio" name="autoTrigger" id="at2" value="אוטומטי לפי לו&quot;ז"><label for="at2">אוטומטי לפי לו"ז</label></div>
-          </div>
-          <input type="text" class="subfield" data-show-if="autoTrigger=אוטומטי לפי לו&quot;ז" name="autoScheduleDetails" placeholder="כל בוקר / כל שעה / אחר...">
-        </div>
-        <div class="field">
-          <label class="q" for="autoWhere">איפה זה ירוץ ומול אילו קבצים/מערכות?</label>
-          <textarea id="autoWhere" name="autoWhere" placeholder="מחשב, כונן משותף, SharePoint..."></textarea>
-        </div>
-      </div>
 
-      <!-- BI / dashboard block -->
-      <div class="type-block" data-type-block="BI / דשבורד">
         <div class="field">
-          <label class="q" for="biSources">מה שמות מקורות המידע (הדוחות) שיזינו את הדשבורד?</label>
-          <textarea id="biSources" name="biSources" placeholder="לדוגמה: דוח מכירות מ-Excel, טבלת CRM, ERP, Google Sheets, מסד נתונים, API..."></textarea>
+          <label class="q" for="dashDefinitions">איך מגדירים כל מדד — מה נכנס בו ומה לא?</label>
+          <textarea id="dashDefinitions" name="dashDefinitions" placeholder='לדוגמה: "סטודנט פעיל" = רשום לקורס אחד לפחות בסמסטר הנוכחי, לא כולל מי שהפסיק. "פנייה שנסגרה" = נסגרה במערכת, לא כולל שנסגרה אוטומטית.'></textarea>
+          <p class="hint">זו השאלה שהכי מפילה דשבורדים. שני אנשים שסופרים אותו דבר בשתי הגדרות מקבלים שני מספרים, ואז אף אחד לא סומך על הדשבורד.</p>
         </div>
+
         <div class="field">
-          <label class="q">באיזו תדירות כל דוח/מקור מתעדכן בפועל?</label>
-          <div class="choice-group" data-group="biFrequency">
-            <div class="choice"><input type="radio" name="biFrequency" id="bf1" value="בזמן אמת"><label for="bf1">בזמן אמת</label></div>
-            <div class="choice"><input type="radio" name="biFrequency" id="bf2" value="כל שעה"><label for="bf2">כל שעה</label></div>
-            <div class="choice"><input type="radio" name="biFrequency" id="bf3" value="יומי"><label for="bf3">יומי</label></div>
-            <div class="choice"><input type="radio" name="biFrequency" id="bf4" value="שבועי"><label for="bf4">שבועי</label></div>
-            <div class="choice"><input type="radio" name="biFrequency" id="bf5" value="חודשי"><label for="bf5">חודשי</label></div>
-            <div class="choice"><input type="radio" name="biFrequency" id="bf6" value="ידני"><label for="bf6">ידני</label></div>
+          <label class="q">המספר צריך להיות נכון לתאריך קבוע, או לרגע שפותחים את הדשבורד?</label>
+          <div class="choice-group" data-group="dashCutoff">
+            <div class="choice"><input type="radio" name="dashCutoff" id="dc1" value="לתאריך חיתוך קבוע"><label for="dc1">לתאריך חיתוך קבוע</label></div>
+            <div class="choice"><input type="radio" name="dashCutoff" id="dc2" value="לרגע הצפייה"><label for="dc2">לרגע הצפייה</label></div>
+            <div class="choice"><input type="radio" name="dashCutoff" id="dc3" value="לא יודע/ת"><label for="dc3">לא יודע/ת</label></div>
+          </div>
+          <input type="text" class="subfield" data-show-if="dashCutoff=לתאריך חיתוך קבוע" name="dashCutoffDetails" placeholder="איזה תאריך? לדוגמה: סוף תקופת השינויים, 30 יום מתחילת סמסטר">
+          <p class="hint">דוח שנמדד לתאריך חיתוך יראה מספר אחד קבוע; דוח שנמדד לרגע הצפייה ישתנה כל יום. אם זה לא מוסכם מראש, כל מספר בדיון יהיה שנוי במחלוקת.</p>
+        </div>
+
+        <div class="field">
+          <label class="q">באיזו יחידת זמן חותכים את הנתונים?</label>
+          <div class="choice-group" data-group="dashTimeUnit">
+            <div class="choice"><input type="checkbox" name="dashTimeUnit" id="dtu1" value="שנה אקדמית"><label for="dtu1">שנה אקדמית</label></div>
+            <div class="choice"><input type="checkbox" name="dashTimeUnit" id="dtu2" value="סמסטר"><label for="dtu2">סמסטר</label></div>
+            <div class="choice"><input type="checkbox" name="dashTimeUnit" id="dtu3" value="שנת תקציב"><label for="dtu3">שנת תקציב</label></div>
+            <div class="choice"><input type="checkbox" name="dashTimeUnit" id="dtu4" value="חודש"><label for="dtu4">חודש</label></div>
+            <div class="choice"><input type="checkbox" name="dashTimeUnit" id="dtu5" value="שבוע"><label for="dtu5">שבוע</label></div>
+            <div class="choice"><input type="checkbox" name="dashTimeUnit" id="dtu6" value="יום"><label for="dtu6">יום</label></div>
           </div>
         </div>
+
         <div class="field">
-          <label class="q" for="biKpis">אילו מדדים (KPIs) הכי מעניינים אתכם לראות? (2–5 מדדים עיקריים)</label>
-          <textarea id="biKpis" name="biKpis" placeholder="לדוגמה: הכנסות, אחוז צמיחה, זמן טיפול בפנייה, שיעור נטישה..."></textarea>
-        </div>
-        <div class="field">
-          <label class="q">באיזו רמת פירוט (Grain) רוצים לראות את הנתונים?</label>
-          <div class="choice-group" data-group="biGrain">
-            <div class="choice"><input type="checkbox" name="biGrain" id="bg1" value="יום"><label for="bg1">יום</label></div>
-            <div class="choice"><input type="checkbox" name="biGrain" id="bg2" value="שבוע"><label for="bg2">שבוע</label></div>
-            <div class="choice"><input type="checkbox" name="biGrain" id="bg3" value="חודש"><label for="bg3">חודש</label></div>
-            <div class="choice"><input type="checkbox" name="biGrain" id="bg4" value="לפי סניף/עובד"><label for="bg4">לפי סניף/עובד</label></div>
-            <div class="choice"><input type="checkbox" name="biGrain" id="bg5" value="לפי לקוח/מוצר"><label for="bg5">לפי לקוח/מוצר</label></div>
+          <label class="q">ולפי מה עוד מפצלים?</label>
+          <div class="choice-group" data-group="dashGrain">
+            <div class="choice"><input type="checkbox" name="dashGrain" id="dg1" value="פקולטה / יחידה"><label for="dg1">פקולטה / יחידה</label></div>
+            <div class="choice"><input type="checkbox" name="dashGrain" id="dg2" value="חוג / תוכנית לימודים"><label for="dg2">חוג / תוכנית לימודים</label></div>
+            <div class="choice"><input type="checkbox" name="dashGrain" id="dg3" value="קורס"><label for="dg3">קורס</label></div>
+            <div class="choice"><input type="checkbox" name="dashGrain" id="dg4" value="סטודנט"><label for="dg4">סטודנט</label></div>
+            <div class="choice"><input type="checkbox" name="dashGrain" id="dg5" value="עובד / מרצה"><label for="dg5">עובד / מרצה</label></div>
+            <div class="choice"><input type="checkbox" name="dashGrain" id="dg6" value="סעיף תקציבי"><label for="dg6">סעיף תקציבי</label></div>
           </div>
         </div>
+
         <div class="field">
-          <label class="q">צריך פילטרים, drill-down, או השוואה לתקופה קודמת/יעד?</label>
-          <div class="choice-group" data-group="biFeatures">
-            <div class="choice"><input type="checkbox" name="biFeatures" id="bft1" value="פילטרים"><label for="bft1">פילטרים</label></div>
-            <div class="choice"><input type="checkbox" name="biFeatures" id="bft2" value="Drill-down"><label for="bft2">Drill-down</label></div>
-            <div class="choice"><input type="checkbox" name="biFeatures" id="bft3" value="השוואה לתקופה קודמת"><label for="bft3">השוואה לתקופה קודמת</label></div>
-            <div class="choice"><input type="checkbox" name="biFeatures" id="bft4" value="השוואה ליעד"><label for="bft4">השוואה ליעד</label></div>
+          <label class="q" for="dashHistory">מאיזו שנה אחורה צריך נתונים?</label>
+          <select id="dashHistory" name="dashHistory">
+            <option value="">בחרו...</option>
+            <option value="השנה הנוכחית בלבד">השנה הנוכחית בלבד</option>
+            <option value="3 שנים אחורה">3 שנים אחורה</option>
+            <option value="5 שנים אחורה">5 שנים אחורה</option>
+            <option value="10 שנים ומעלה">10 שנים ומעלה</option>
+            <option value="כל מה שקיים">כל מה שקיים</option>
+            <option value="לא יודע/ת">לא יודע/ת</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label class="q">יש כבר גישה לנתונים, או שצריך לבקש אישור?</label>
+          <div class="choice-group" data-group="dashAccess">
+            <div class="choice"><input type="radio" name="dashAccess" id="da1" value="יש גישה בפועל"><label for="da1">יש גישה בפועל</label></div>
+            <div class="choice"><input type="radio" name="dashAccess" id="da2" value="צריך אישור בעל המערכת"><label for="da2">צריך אישור בעל המערכת</label></div>
+            <div class="choice"><input type="radio" name="dashAccess" id="da3" value="לא יודע/ת"><label for="da3">לא יודע/ת</label></div>
+          </div>
+          <input type="text" class="subfield" data-show-if="dashAccess=צריך אישור בעל המערכת" name="dashAccessOwner" placeholder="מי בעל המערכת / מי מאשר?">
+        </div>
+
+        <div class="field">
+          <label class="q" for="dashViewers">מי יסתכל על זה בפועל, ובאיזה פורום?</label>
+          <textarea id="dashViewers" name="dashViewers" placeholder="לדוגמה: ראש האגף שבועית, דיקן בישיבת הנהלה חודשית, נספח לדיווח חוץ"></textarea>
+        </div>
+
+        <div class="field">
+          <label class="q">מה צריך להיות אפשרי בתוך הדשבורד?</label>
+          <div class="choice-group" data-group="dashFeatures">
+            <div class="choice"><input type="checkbox" name="dashFeatures" id="df1" value="פילטרים"><label for="df1">פילטרים</label></div>
+            <div class="choice"><input type="checkbox" name="dashFeatures" id="df2" value="ירידה לפירוט (drill-down)"><label for="df2">ירידה לפירוט</label></div>
+            <div class="choice"><input type="checkbox" name="dashFeatures" id="df3" value="השוואה לתקופה קודמת"><label for="df3">השוואה לתקופה קודמת</label></div>
+            <div class="choice"><input type="checkbox" name="dashFeatures" id="df4" value="השוואה ליעד"><label for="df4">השוואה ליעד</label></div>
           </div>
         </div>
+
         <div class="field">
           <label class="q">באיזה כלי זה ירוץ או יוצג?</label>
-          <div class="choice-group" data-group="biTool">
-            <div class="choice"><input type="radio" name="biTool" id="bt1" value="Power BI"><label for="bt1">Power BI</label></div>
-            <div class="choice"><input type="radio" name="biTool" id="bt2" value="Excel"><label for="bt2">Excel</label></div>
-            <div class="choice"><input type="radio" name="biTool" id="bt3" value="Looker Studio"><label for="bt3">Looker Studio</label></div>
-            <div class="choice"><input type="radio" name="biTool" id="bt4" value="Tableau"><label for="bt4">Tableau</label></div>
-            <div class="choice"><input type="radio" name="biTool" id="bt5" value="דשבורד מותאם אישית"><label for="bt5">דשבורד מותאם אישית</label></div>
-            <div class="choice"><input type="radio" name="biTool" id="bt6" value="לא יודע/ת"><label for="bt6">לא יודע/ת</label></div>
+          <div class="choice-group" data-group="dashTool">
+            <div class="choice"><input type="radio" name="dashTool" id="dl1" value="Power BI"><label for="dl1">Power BI</label></div>
+            <div class="choice"><input type="radio" name="dashTool" id="dl2" value="Excel"><label for="dl2">Excel</label></div>
+            <div class="choice"><input type="radio" name="dashTool" id="dl3" value="Looker Studio"><label for="dl3">Looker Studio</label></div>
+            <div class="choice"><input type="radio" name="dashTool" id="dl4" value="Tableau"><label for="dl4">Tableau</label></div>
+            <div class="choice"><input type="radio" name="dashTool" id="dl5" value="דשבורד מותאם אישית"><label for="dl5">דשבורד מותאם אישית</label></div>
+            <div class="choice"><input type="radio" name="dashTool" id="dl6" value="לא משנה לי"><label for="dl6">לא משנה לי</label></div>
           </div>
         </div>
+
         <div class="field">
-          <label class="q">צריך הרשאות שונות — מי רואה מה?</label>
-          <div class="choice-group" data-group="biPermissions">
-            <div class="choice"><input type="radio" name="biPermissions" id="bp1" value="כן"><label for="bp1">כן</label></div>
-            <div class="choice"><input type="radio" name="biPermissions" id="bp2" value="לא, כולם רואים הכל"><label for="bp2">לא, כולם רואים הכל</label></div>
+          <label class="q">איפה זה ייצפה, וצריך ייצוא או שיתוף?</label>
+          <div class="choice-group" data-group="dashOutput">
+            <div class="choice"><input type="checkbox" name="dashOutput" id="do1" value="מחשב"><label for="do1">מחשב</label></div>
+            <div class="choice"><input type="checkbox" name="dashOutput" id="do2" value="נייד"><label for="do2">נייד</label></div>
+            <div class="choice"><input type="checkbox" name="dashOutput" id="do3" value="ייצוא ל-PDF / Excel"><label for="do3">ייצוא ל-PDF / Excel</label></div>
+            <div class="choice"><input type="checkbox" name="dashOutput" id="do4" value="שיתוף מחוץ ליחידה"><label for="do4">שיתוף מחוץ ליחידה</label></div>
           </div>
-          <textarea class="subfield" data-show-if="biPermissions=כן" name="biPermissionsDetails" placeholder="פרטו מי רואה מה..."></textarea>
         </div>
+      </div>
+
+      <!-- ═══ אוטומציה ═══ -->
+      <div class="type-block" data-type-block="אוטומציה">
         <div class="field">
-          <label class="q">צריך התראה כשמדד חורג מסף מסוים?</label>
-          <div class="choice-group" data-group="biAlerts">
-            <div class="choice"><input type="radio" name="biAlerts" id="ba1" value="כן"><label for="ba1">כן</label></div>
-            <div class="choice"><input type="radio" name="biAlerts" id="ba2" value="לא"><label for="ba2">לא</label></div>
+          <label class="q">מה מפעיל את התהליך?</label>
+          <div class="choice-group" data-group="autoTrigger">
+            <div class="choice"><input type="radio" name="autoTrigger" id="au1" value="ידנית בלחיצת כפתור"><label for="au1">ידנית בלחיצת כפתור</label></div>
+            <div class="choice"><input type="radio" name="autoTrigger" id="au2" value="לפי לוח זמנים"><label for="au2">לפי לוח זמנים</label></div>
+            <div class="choice"><input type="radio" name="autoTrigger" id="au3" value="כשמגיע מייל או קובץ"><label for="au3">כשמגיע מייל או קובץ</label></div>
+            <div class="choice"><input type="radio" name="autoTrigger" id="au4" value="כשמשתנה נתון במערכת"><label for="au4">כשמשתנה נתון במערכת</label></div>
           </div>
-          <input type="text" class="subfield" data-show-if="biAlerts=כן" name="biAlertsDetails" placeholder="למי ובאיזה ערוץ (מייל/וואטסאפ)?">
+          <input type="text" class="subfield" data-show-if="autoTrigger=לפי לוח זמנים" name="autoSchedule" placeholder="באיזו תדירות ובאיזו שעה?">
         </div>
+
         <div class="field">
-          <label class="q">איפה זה ייצפה בעיקר, וצריך ייצוא או שיתוף?</label>
-          <div class="choice-group" data-group="biDevice">
-            <div class="choice"><input type="checkbox" name="biDevice" id="bd1" value="מחשב"><label for="bd1">מחשב</label></div>
-            <div class="choice"><input type="checkbox" name="biDevice" id="bd2" value="נייד"><label for="bd2">נייד</label></div>
-            <div class="choice"><input type="checkbox" name="biDevice" id="bd3" value="ייצוא ל-PDF/Excel"><label for="bd3">ייצוא ל-PDF/Excel</label></div>
-            <div class="choice"><input type="checkbox" name="biDevice" id="bd4" value="שיתוף עם גורמים נוספים"><label for="bd4">שיתוף עם גורמים נוספים</label></div>
+          <label class="q" for="autoVolume">כמה פעמים זה קורה, ועל כמה נתונים בכל פעם?</label>
+          <input type="text" id="autoVolume" name="autoVolume" placeholder="לדוגמה: פעמיים בשבוע, בערך 400 שורות בכל הרצה">
+          <p class="hint">נפח קובע אם שווה בכלל לבנות אוטומציה, ואיזו.</p>
+        </div>
+
+        <div class="field">
+          <label class="q">מה צריך לקרות לנתונים?</label>
+          <div class="choice-group" data-group="autoProcess">
+            <div class="choice"><input type="checkbox" name="autoProcess" id="ap1" value="סינון"><label for="ap1">סינון</label></div>
+            <div class="choice"><input type="checkbox" name="autoProcess" id="ap2" value="חישוב"><label for="ap2">חישוב</label></div>
+            <div class="choice"><input type="checkbox" name="autoProcess" id="ap3" value="השוואה בין מקורות"><label for="ap3">השוואה בין מקורות</label></div>
+            <div class="choice"><input type="checkbox" name="autoProcess" id="ap4" value="מיזוג קבצים"><label for="ap4">מיזוג קבצים</label></div>
+            <div class="choice"><input type="checkbox" name="autoProcess" id="ap5" value="הפקת דוח"><label for="ap5">הפקת דוח</label></div>
+            <div class="choice"><input type="checkbox" name="autoProcess" id="ap6" value="שליחת מייל / עדכון מערכת"><label for="ap6">שליחת מייל / עדכון מערכת</label></div>
           </div>
+        </div>
+
+        <div class="field">
+          <label class="q" for="autoRules">יש כללים או מקרי קצה שצריך לדעת עליהם?</label>
+          <textarea id="autoRules" name="autoRules" placeholder='לדוגמה: אם שדה "תעודת זהות" ריק — לא לספור את השורה. אם אותו שם מופיע פעמיים — לקחת את המופע האחרון.'></textarea>
+        </div>
+
+        <div class="field">
+          <label class="q">מה צריך לקרות כשמשהו לא תקין?</label>
+          <div class="choice-group" data-group="autoExceptions">
+            <div class="choice"><input type="radio" name="autoExceptions" id="ae1" value="לדלג ולהמשיך"><label for="ae1">לדלג ולהמשיך</label></div>
+            <div class="choice"><input type="radio" name="autoExceptions" id="ae2" value="לעצור הכל"><label for="ae2">לעצור הכל</label></div>
+            <div class="choice"><input type="radio" name="autoExceptions" id="ae3" value="להתריע ולהמשיך"><label for="ae3">להתריע ולהמשיך</label></div>
+          </div>
+          <input type="text" class="subfield" data-show-if="autoExceptions=להתריע ולהמשיך" name="autoExceptionsWho" placeholder="למי להתריע, ובאיזה ערוץ?">
+          <p class="hint">רוב הזמן שהולך על אוטומציה הולך על החריגות, לא על המקרה הרגיל.</p>
+        </div>
+
+        <div class="field">
+          <label class="q" for="autoWhere">מול אילו מערכות או קבצים זה עובד, ואיפה זה ירוץ?</label>
+          <textarea id="autoWhere" name="autoWhere" placeholder="לדוגמה: קורא מקובץ בתיקייה משותפת ומעדכן טבלה ב-SharePoint; ירוץ על מחשב היחידה"></textarea>
+        </div>
+
+        <div class="field">
+          <label class="q">יש הרשאה לגשת למערכת שצריך לעדכן?</label>
+          <div class="choice-group" data-group="autoPerms">
+            <div class="choice"><input type="radio" name="autoPerms" id="an1" value="יש הרשאה"><label for="an1">יש הרשאה</label></div>
+            <div class="choice"><input type="radio" name="autoPerms" id="an2" value="צריך הרשאה או חשבון שירות"><label for="an2">צריך הרשאה או חשבון שירות</label></div>
+            <div class="choice"><input type="radio" name="autoPerms" id="an3" value="לא יודע/ת"><label for="an3">לא יודע/ת</label></div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="q">התהליך נשאר אותו דבר, או משתנה?</label>
+          <div class="choice-group" data-group="autoStability">
+            <div class="choice"><input type="radio" name="autoStability" id="as1" value="זהה כל פעם"><label for="as1">זהה כל פעם</label></div>
+            <div class="choice"><input type="radio" name="autoStability" id="as2" value="משתנה כל סמסטר"><label for="as2">משתנה כל סמסטר</label></div>
+            <div class="choice"><input type="radio" name="autoStability" id="as3" value="משתנה לעיתים"><label for="as3">משתנה לעיתים</label></div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="q" for="autoSaving">כמה זמן זה לוקח היום בעבודה ידנית?</label>
+          <input type="text" id="autoSaving" name="autoSaving" placeholder="לדוגמה: כשעתיים בכל פעם, לשני אנשים">
+        </div>
+      </div>
+
+      <!-- ═══ מערכת ═══ -->
+      <div class="type-block" data-type-block="מערכת">
+        <div class="field">
+          <label class="q">מי ישתמש במערכת?</label>
+          <div class="choice-group" data-group="sysAudience">
+            <div class="choice"><input type="checkbox" name="sysAudience" id="sa1" value="סגל אקדמי"><label for="sa1">סגל אקדמי</label></div>
+            <div class="choice"><input type="checkbox" name="sysAudience" id="sa2" value="סגל מנהלי"><label for="sa2">סגל מנהלי</label></div>
+            <div class="choice"><input type="checkbox" name="sysAudience" id="sa3" value="סטודנטים"><label for="sa3">סטודנטים</label></div>
+            <div class="choice"><input type="checkbox" name="sysAudience" id="sa4" value="גורם מחוץ לאוניברסיטה"><label for="sa4">גורם מחוץ לאוניברסיטה</label></div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="q">איפה זה צריך לרוץ?</label>
+          <div class="choice-group" data-group="sysPlatform">
+            <div class="choice"><input type="radio" name="sysPlatform" id="sp1" value="דפדפן"><label for="sp1">דפדפן</label></div>
+            <div class="choice"><input type="radio" name="sysPlatform" id="sp2" value="אפליקציה בנייד"><label for="sp2">אפליקציה בנייד</label></div>
+            <div class="choice"><input type="radio" name="sysPlatform" id="sp3" value="תוכנה במחשב"><label for="sp3">תוכנה במחשב</label></div>
+            <div class="choice"><input type="radio" name="sysPlatform" id="sp4" value="כמה מהאפשרויות"><label for="sp4">כמה מהאפשרויות</label></div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="q">מאיזה מכשירים בעיקר?</label>
+          <div class="choice-group" data-group="sysDevice">
+            <div class="choice"><input type="radio" name="sysDevice" id="sd1" value="מחשב"><label for="sd1">מחשב</label></div>
+            <div class="choice"><input type="radio" name="sysDevice" id="sd2" value="טלפון"><label for="sd2">טלפון</label></div>
+            <div class="choice"><input type="radio" name="sysDevice" id="sd3" value="שניהם"><label for="sd3">שניהם</label></div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="q">איך מזדהים בכניסה?</label>
+          <div class="choice-group" data-group="sysAuth">
+            <div class="choice"><input type="radio" name="sysAuth" id="sh1" value="חשבון האוניברסיטה"><label for="sh1">חשבון האוניברסיטה</label></div>
+            <div class="choice"><input type="radio" name="sysAuth" id="sh2" value="משתמש וסיסמה נפרדים"><label for="sh2">משתמש וסיסמה נפרדים</label></div>
+            <div class="choice"><input type="radio" name="sysAuth" id="sh3" value="בלי התחברות"><label for="sh3">בלי התחברות</label></div>
+            <div class="choice"><input type="radio" name="sysAuth" id="sh4" value="לא יודע/ת"><label for="sh4">לא יודע/ת</label></div>
+          </div>
+          <p class="hint">התחברות עם חשבון האוניברסיטה חוסכת ניהול סיסמאות, אבל דורשת תיאום עם אגף המחשוב מראש.</p>
+        </div>
+
+        <div class="field">
+          <label class="q" for="sysScreens">2–3 המסכים העיקריים שאתם מדמיינים</label>
+          <textarea id="sysScreens" name="sysScreens" placeholder="לדוגמה: מסך רשימת בקשות, מסך פרטי בקשה, מסך אישור מנהל"></textarea>
+        </div>
+      </div>
+
+      <!-- ═══ אתר ═══ -->
+      <div class="type-block" data-type-block="אתר">
+        <div class="field">
+          <label class="q">מה האתר צריך לעשות?</label>
+          <div class="choice-group" data-group="siteGoal">
+            <div class="choice"><input type="radio" name="siteGoal" id="sg1" value="תדמית ומידע כללי"><label for="sg1">תדמית ומידע כללי</label></div>
+            <div class="choice"><input type="radio" name="siteGoal" id="sg2" value="מידע לסטודנטים"><label for="sg2">מידע לסטודנטים</label></div>
+            <div class="choice"><input type="radio" name="siteGoal" id="sg3" value="הרשמה או רישום"><label for="sg3">הרשמה או רישום</label></div>
+            <div class="choice"><input type="radio" name="siteGoal" id="sg4" value="אירוע או כנס"><label for="sg4">אירוע או כנס</label></div>
+            <div class="choice"><input type="radio" name="siteGoal" id="sg5" value="גיוס וחשיפה"><label for="sg5">גיוס וחשיפה</label></div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="q" for="sitePages">כמה עמודים בערך, ומה הם?</label>
+          <textarea id="sitePages" name="sitePages" placeholder="לדוגמה: בית, אודות, תוכניות לימוד, צוות, טופס הרשמה, צור קשר"></textarea>
+        </div>
+
+        <div class="field">
+          <label class="q">איפה האתר צריך לשבת?</label>
+          <div class="choice-group" data-group="siteDomain">
+            <div class="choice"><input type="radio" name="siteDomain" id="sn1" value="תחת אתר האוניברסיטה"><label for="sn1">תחת אתר האוניברסיטה</label></div>
+            <div class="choice"><input type="radio" name="siteDomain" id="sn2" value="תת־דומיין נפרד"><label for="sn2">תת־דומיין נפרד</label></div>
+            <div class="choice"><input type="radio" name="siteDomain" id="sn3" value="דומיין חדש עצמאי"><label for="sn3">דומיין חדש עצמאי</label></div>
+            <div class="choice"><input type="radio" name="siteDomain" id="sn4" value="לא יודע/ת"><label for="sn4">לא יודע/ת</label></div>
+          </div>
+          <input type="text" class="subfield" data-show-if="siteDomain=תחת אתר האוניברסיטה" name="siteDomainApprover" placeholder="מי מאשר את זה מצד האוניברסיטה?">
+        </div>
+
+        <div class="field">
+          <label class="q">נדרשת עמידה בתקן נגישות?</label>
+          <div class="choice-group" data-group="siteA11y">
+            <div class="choice"><input type="radio" name="siteA11y" id="sy1" value="כן, נדרשת עמידה בתקן"><label for="sy1">כן, נדרשת</label></div>
+            <div class="choice"><input type="radio" name="siteA11y" id="sy2" value="לא נדרשת"><label for="sy2">לא נדרשת</label></div>
+            <div class="choice"><input type="radio" name="siteA11y" id="sy3" value="לא יודע/ת"><label for="sy3">לא יודע/ת</label></div>
+          </div>
+          <p class="hint">אתר של מוסד ציבורי בישראל מחויב לתקן 5568 (מבוסס WCAG). זה משפיע על ההיקף מהיום הראשון, לא בסוף.</p>
+        </div>
+
+        <div class="field">
+          <label class="q">באילו שפות?</label>
+          <div class="choice-group" data-group="siteLang">
+            <div class="choice"><input type="checkbox" name="siteLang" id="sl1" value="עברית"><label for="sl1">עברית</label></div>
+            <div class="choice"><input type="checkbox" name="siteLang" id="sl2" value="אנגלית"><label for="sl2">אנגלית</label></div>
+            <div class="choice"><input type="checkbox" name="siteLang" id="sl3" value="ערבית"><label for="sl3">ערבית</label></div>
+            <div class="choice"><input type="checkbox" name="siteLang" id="sl4" value="רוסית"><label for="sl4">רוסית</label></div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="q">מה מצב התכנים והתמונות?</label>
+          <div class="choice-group" data-group="siteContent">
+            <div class="choice"><input type="radio" name="siteContent" id="sc1" value="מוכנים"><label for="sc1">מוכנים</label></div>
+            <div class="choice"><input type="radio" name="siteContent" id="sc2" value="יסופקו בהמשך"><label for="sc2">יסופקו בהמשך</label></div>
+            <div class="choice"><input type="radio" name="siteContent" id="sc3" value="צריך עזרה בכתיבה"><label for="sc3">צריך עזרה בכתיבה</label></div>
+          </div>
+          <input type="text" class="subfield" data-show-if="siteContent=יסופקו בהמשך" name="siteContentDate" placeholder="עד מתי, ומי אחראי?">
+        </div>
+
+        <div class="field">
+          <label class="q" for="siteOwner">מי יעדכן את האתר אחרי שהוא עולה?</label>
+          <input type="text" id="siteOwner" name="siteOwner" placeholder="שם ותפקיד — או 'אין עדיין מי'">
+          <p class="hint">אתר בלי מי שמתחזק אותו הופך תוך חצי שנה לאתר שמזיק יותר משהוא עוזר.</p>
+        </div>
+
+        <div class="field">
+          <label class="q">מה עוד צריך להיות באתר?</label>
+          <div class="choice-group" data-group="siteNeeds">
+            <div class="choice"><input type="checkbox" name="siteNeeds" id="se1" value="עדכון תוכן עצמאי"><label for="se1">עדכון תוכן עצמאי</label></div>
+            <div class="choice"><input type="checkbox" name="siteNeeds" id="se2" value="טפסים"><label for="se2">טפסים</label></div>
+            <div class="choice"><input type="checkbox" name="siteNeeds" id="se3" value="הרשמה לאירוע"><label for="se3">הרשמה לאירוע</label></div>
+            <div class="choice"><input type="checkbox" name="siteNeeds" id="se4" value="תשלום אונליין"><label for="se4">תשלום אונליין</label></div>
+            <div class="choice"><input type="checkbox" name="siteNeeds" id="se5" value="אף אחד מאלה"><label for="se5">אף אחד מאלה</label></div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="q" for="siteBranding">יש מיתוג קיים? ואתר שאהבתם ואחד שלא (קישור)</label>
+          <textarea id="siteBranding" name="siteBranding" placeholder="לוגו, צבעים, קווי מנחה של האוניברסיטה, ודוגמאות"></textarea>
         </div>
       </div>
     </div>
@@ -486,29 +715,45 @@
 
       <div class="field">
         <label class="q" for="oneLiner">תארו במשפט אחד: "משהו ש___ בשביל ___"</label>
-        <input type="text" id="oneLiner" name="oneLiner" placeholder="לדוגמה: משהו שמנהל לי הזמנות בשביל שלא אאבד לקוחות">
+        <input type="text" id="oneLiner" name="oneLiner" placeholder="לדוגמה: משהו שמראה לי מצב רישום לפי חוג בשביל להחליט אילו קורסים לפתוח">
       </div>
+
       <div class="field">
-        <label class="q">איך זה נעשה היום, בלי המערכת?</label>
+        <label class="q">איך זה נעשה היום?</label>
         <div class="choice-group" data-group="today">
-          <div class="choice"><input type="radio" name="today" id="today1" value="אקסל ידני"><label for="today1">אקסל ידני</label></div>
-          <div class="choice"><input type="radio" name="today" id="today2" value="נייר"><label for="today2">נייר</label></div>
-          <div class="choice"><input type="radio" name="today" id="today3" value="וואטסאפ"><label for="today3">וואטסאפ</label></div>
-          <div class="choice"><input type="radio" name="today" id="today4" value="כלום"><label for="today4">כלום</label></div>
-          <div class="choice"><input type="radio" name="today" id="today5" value="אחר"><label for="today5">אחר</label></div>
+          <div class="choice"><input type="radio" name="today" id="td1" value="אקסל ידני"><label for="td1">אקסל ידני</label></div>
+          <div class="choice"><input type="radio" name="today" id="td2" value="דוח שמישהו מפיק לנו"><label for="td2">דוח שמישהו מפיק לנו</label></div>
+          <div class="choice"><input type="radio" name="today" id="td3" value="נייר"><label for="td3">נייר</label></div>
+          <div class="choice"><input type="radio" name="today" id="td4" value="מייל ווטסאפ וטלפונים"><label for="td4">מייל, ווטסאפ וטלפונים</label></div>
+          <div class="choice"><input type="radio" name="today" id="td5" value="לא נעשה בכלל"><label for="td5">לא נעשה בכלל</label></div>
+          <div class="choice"><input type="radio" name="today" id="td6" value="אחר"><label for="td6">אחר</label></div>
         </div>
         <textarea class="subfield" data-show-if="today=אחר" name="todayOther" placeholder="פרטו..."></textarea>
       </div>
+
       <div class="field">
-        <label class="q">מה הבעיה הכי כואבת שגורמת לכם לרצות את זה?</label>
+        <label class="q">מה הכי כואב במצב הקיים?</label>
         <div class="choice-group" data-group="pain">
-          <div class="choice"><input type="checkbox" name="pain" id="pain1" value="בזבוז זמן"><label for="pain1">בזבוז זמן</label></div>
-          <div class="choice"><input type="checkbox" name="pain" id="pain2" value="טעויות"><label for="pain2">טעויות</label></div>
-          <div class="choice"><input type="checkbox" name="pain" id="pain3" value="בלגן וחוסר סדר"><label for="pain3">בלגן וחוסר סדר</label></div>
-          <div class="choice"><input type="checkbox" name="pain" id="pain4" value="חוויית לקוחות"><label for="pain4">חוויית לקוחות</label></div>
-          <div class="choice"><input type="checkbox" name="pain" id="pain5" value="אחר"><label for="pain5">אחר</label></div>
+          <div class="choice"><input type="checkbox" name="pain" id="pn1" value="בזבוז זמן"><label for="pn1">בזבוז זמן</label></div>
+          <div class="choice"><input type="checkbox" name="pain" id="pn2" value="טעויות במספרים"><label for="pn2">טעויות במספרים</label></div>
+          <div class="choice"><input type="checkbox" name="pain" id="pn3" value="אין תמונת מצב בזמן"><label for="pn3">אין תמונת מצב בזמן</label></div>
+          <div class="choice"><input type="checkbox" name="pain" id="pn4" value="כל אחד מגיע עם מספר אחר"><label for="pn4">כל אחד מגיע עם מספר אחר</label></div>
+          <div class="choice"><input type="checkbox" name="pain" id="pn5" value="תלות באדם אחד"><label for="pn5">תלות באדם אחד</label></div>
+          <div class="choice"><input type="checkbox" name="pain" id="pn6" value="אחר"><label for="pn6">אחר</label></div>
         </div>
         <textarea name="painDetails" placeholder="פרטים נוספים (לא חובה)"></textarea>
+      </div>
+
+      <div class="field">
+        <label class="q" for="doNothing">ואם לא נעשה כלום — מה יקרה?</label>
+        <input type="text" id="doNothing" name="doNothing" placeholder="לדוגמה: נמשיך להגיע לוועדה בלי נתונים / נפספס את מועד הדיווח">
+        <p class="hint">התשובה הזו קובעת עדיפות. כשהכל דחוף, שום דבר לא דחוף.</p>
+      </div>
+
+      <div class="field">
+        <label class="q" for="existingTool">יש דוח או כלי קיים שזה מחליף או משפר?</label>
+        <textarea id="existingTool" name="existingTool" placeholder="שם הדוח, מי מפיק אותו, ומה לא טוב בו. אם אפשר — שלחו אותו אלינו במייל בנפרד."></textarea>
+        <p class="hint">עדיף לשפר דוח שכבר עובד מלבנות מאפס משהו שכבר קיים חלקית.</p>
       </div>
     </div>
 
@@ -517,16 +762,18 @@
       <h2><span class="num">3</span> מי משתמש</h2>
 
       <div class="field">
-        <label class="q">מי המשתמשים?</label>
+        <label class="q">מי ייגש לזה?</label>
         <div class="choice-group" data-group="users">
-          <div class="choice"><input type="radio" name="users" id="users1" value="אני בלבד"><label for="users1">אני בלבד</label></div>
-          <div class="choice"><input type="radio" name="users" id="users2" value="צוות"><label for="users2">צוות</label></div>
-          <div class="choice"><input type="radio" name="users" id="users3" value="הלקוחות שלי"><label for="users3">הלקוחות שלי</label></div>
-          <div class="choice"><input type="radio" name="users" id="users4" value="הציבור הרחב"><label for="users4">הציבור הרחב</label></div>
+          <div class="choice"><input type="radio" name="users" id="us1" value="אני בלבד"><label for="us1">אני בלבד</label></div>
+          <div class="choice"><input type="radio" name="users" id="us2" value="הצוות שלי"><label for="us2">הצוות שלי</label></div>
+          <div class="choice"><input type="radio" name="users" id="us3" value="כמה יחידות"><label for="us3">כמה יחידות</label></div>
+          <div class="choice"><input type="radio" name="users" id="us4" value="כל האוניברסיטה"><label for="us4">כל האוניברסיטה</label></div>
+          <div class="choice"><input type="radio" name="users" id="us5" value="גם גורם חוץ"><label for="us5">גם גורם חוץ</label></div>
         </div>
       </div>
+
       <div class="field">
-        <label class="q" for="usersCount">כמה בערך?</label>
+        <label class="q" for="usersCount">כמה אנשים בערך?</label>
         <select id="usersCount" name="usersCount">
           <option value="">בחרו...</option>
           <option value="1">1</option>
@@ -538,14 +785,15 @@
           <option value="לא יודע/ת">לא יודע/ת</option>
         </select>
       </div>
+
       <div class="field">
-        <label class="q">יש סוגי משתמשים עם הרשאות שונות? (מנהל שרואה הכל מול עובד שרואה חלק)</label>
+        <label class="q">צריך שאנשים שונים יראו דברים שונים?</label>
         <div class="choice-group" data-group="permissions">
-          <div class="choice"><input type="radio" name="permissions" id="perm1" value="כן"><label for="perm1">כן</label></div>
-          <div class="choice"><input type="radio" name="permissions" id="perm2" value="לא"><label for="perm2">לא</label></div>
-          <div class="choice"><input type="radio" name="permissions" id="perm3" value="לא יודע/ת"><label for="perm3">לא יודע/ת</label></div>
+          <div class="choice"><input type="radio" name="permissions" id="pm1" value="כן"><label for="pm1">כן</label></div>
+          <div class="choice"><input type="radio" name="permissions" id="pm2" value="לא, כולם רואים הכל"><label for="pm2">לא, כולם רואים הכל</label></div>
+          <div class="choice"><input type="radio" name="permissions" id="pm3" value="לא יודע/ת"><label for="pm3">לא יודע/ת</label></div>
         </div>
-        <textarea class="subfield" data-show-if="permissions=כן" name="permissionsDetails" placeholder="פרטו את סוגי המשתמשים וההרשאות..."></textarea>
+        <textarea class="subfield" data-show-if="permissions=כן" name="permissionsDetails" placeholder="לדוגמה: ראש האגף רואה את כל היחידות, רכז רואה רק את שלו"></textarea>
       </div>
     </div>
 
@@ -555,99 +803,119 @@
 
       <div class="field">
         <label class="q" for="mainActions">3–5 הדברים העיקריים שיקרו כאן</label>
-        <textarea id="mainActions" name="mainActions" placeholder="לדוגמה: להוסיף לקוח, להפיק דוח, לשלוח הזמנה..."></textarea>
+        <textarea id="mainActions" name="mainActions" placeholder="לדוגמה: לראות מצב רישום לפי חוג, לסנן לפי סמסטר, לייצא טבלה לוועדה"></textarea>
       </div>
+
       <div class="field">
-        <label class="q" for="mustHave">אם רק דבר אחד יעבוד — מה הוא? (הכי חשוב)</label>
+        <label class="q" for="mustHave">אם רק דבר אחד יעבוד — מה הוא?</label>
         <input type="text" id="mustHave" name="mustHave">
+        <p class="hint">זה מה שנבנה ראשון.</p>
       </div>
     </div>
 
     <!-- 5 -->
     <div class="card">
-      <h2><span class="num">5</span> נתונים — מה נכנס ומה יוצא</h2>
+      <h2><span class="num">5</span> נתונים</h2>
 
       <div class="field">
-        <label class="q">מה נכנס למערכת?</label>
-        <div class="choice-group" data-group="dataIn">
-          <div class="choice"><input type="checkbox" name="dataIn" id="dataIn1" value="טקסט שמקלידים"><label for="dataIn1">טקסט שמקלידים</label></div>
-          <div class="choice"><input type="checkbox" name="dataIn" id="dataIn2" value="קבצים"><label for="dataIn2">קבצים</label></div>
-          <div class="choice"><input type="checkbox" name="dataIn" id="dataIn3" value="תמונות"><label for="dataIn3">תמונות</label></div>
-          <div class="choice"><input type="checkbox" name="dataIn" id="dataIn4" value="מקור נתונים אחר"><label for="dataIn4">מקור נתונים אחר</label></div>
-        </div>
+        <label class="q">מאיפה הנתונים מגיעים?</label>
+        <div class="choice-group" id="sourceSystemsGroup" data-group="sources"></div>
       </div>
+
       <div class="field">
-        <label class="q">מאיפה זה מגיע?</label>
-        <div class="choice-group" data-group="dataSource">
-          <div class="choice"><input type="radio" name="dataSource" id="src1" value="הקלדה ידנית"><label for="src1">הקלדה ידנית</label></div>
-          <div class="choice"><input type="radio" name="dataSource" id="src2" value="אקסל"><label for="src2">אקסל</label></div>
-          <div class="choice"><input type="radio" name="dataSource" id="src3" value="מערכת אחרת"><label for="src3">מערכת אחרת</label></div>
-          <div class="choice"><input type="radio" name="dataSource" id="src4" value="מייל"><label for="src4">מייל</label></div>
-          <div class="choice"><input type="radio" name="dataSource" id="src5" value="אתר"><label for="src5">אתר</label></div>
-        </div>
+        <label class="q" for="sourceDetails">אילו דוחות, טבלאות או קבצים בדיוק?</label>
+        <textarea id="sourceDetails" name="sourceDetails" placeholder="שמות הדוחות או הקבצים כפי שהם נקראים אצלכם, ומי מפיק כל אחד"></textarea>
       </div>
+
       <div class="field">
-        <label class="q">מה רוצים לקבל בסוף?</label>
+        <label class="q">מה צריך לצאת בסוף?</label>
         <div class="choice-group" data-group="dataOut">
-          <div class="choice"><input type="checkbox" name="dataOut" id="out1" value="רשימה על מסך"><label for="out1">רשימה על מסך</label></div>
-          <div class="choice"><input type="checkbox" name="dataOut" id="out2" value="דוח"><label for="out2">דוח</label></div>
-          <div class="choice"><input type="checkbox" name="dataOut" id="out3" value="קובץ"><label for="out3">קובץ</label></div>
-          <div class="choice"><input type="checkbox" name="dataOut" id="out4" value="מייל"><label for="out4">מייל</label></div>
-          <div class="choice"><input type="checkbox" name="dataOut" id="out5" value="הודעה"><label for="out5">הודעה</label></div>
+          <div class="choice"><input type="checkbox" name="dataOut" id="ot1" value="תמונת מצב על מסך"><label for="ot1">תמונת מצב על מסך</label></div>
+          <div class="choice"><input type="checkbox" name="dataOut" id="ot2" value="דוח מודפס או PDF"><label for="ot2">דוח מודפס או PDF</label></div>
+          <div class="choice"><input type="checkbox" name="dataOut" id="ot3" value="קובץ אקסל"><label for="ot3">קובץ אקסל</label></div>
+          <div class="choice"><input type="checkbox" name="dataOut" id="ot4" value="עדכון במערכת אחרת"><label for="ot4">עדכון במערכת אחרת</label></div>
         </div>
       </div>
+
       <div class="field">
+        <label class="q">איזה סוג מידע יש כאן?</label>
+        <div class="choice-group" data-group="dataSensitivity">
+          <div class="choice"><input type="checkbox" name="dataSensitivity" id="ds1" value="נתונים מצרפיים בלבד"><label for="ds1">נתונים מצרפיים בלבד</label></div>
+          <div class="choice"><input type="checkbox" name="dataSensitivity" id="ds2" value="נתונים מזהים של סטודנטים"><label for="ds2">נתונים מזהים של סטודנטים</label></div>
+          <div class="choice"><input type="checkbox" name="dataSensitivity" id="ds3" value="ציונים והישגים"><label for="ds3">ציונים והישגים</label></div>
+          <div class="choice"><input type="checkbox" name="dataSensitivity" id="ds4" value="נתוני עובדים או שכר"><label for="ds4">נתוני עובדים או שכר</label></div>
+          <div class="choice"><input type="checkbox" name="dataSensitivity" id="ds5" value="נתונים רפואיים או רגישים"><label for="ds5">נתונים רפואיים או רגישים</label></div>
+          <div class="choice"><input type="checkbox" name="dataSensitivity" id="ds6" value="לא יודע/ת"><label for="ds6">לא יודע/ת</label></div>
+        </div>
+        <p class="hint">מידע מזהה או רגיש מחייב אישור והגנות נוספות. עדיף לדעת עכשיו מאשר אחרי שנבנה.</p>
+      </div>
+
+      <div class="field">
+        <label class="q">צריך התראה כשמשהו חורג?</label>
+        <div class="choice-group" data-group="alerts">
+          <div class="choice"><input type="radio" name="alerts" id="al1" value="כן"><label for="al1">כן</label></div>
+          <div class="choice"><input type="radio" name="alerts" id="al2" value="לא"><label for="al2">לא</label></div>
+        </div>
+        <input type="text" class="subfield" data-show-if="alerts=כן" name="alertsDetails" placeholder="על מה, למי, ובאיזה ערוץ (מייל / ווטסאפ)?">
+      </div>
+
+      <div class="field" data-types="אוטומציה,מערכת,אתר">
         <label class="q">המידע צריך להישמר לאורך זמן?</label>
         <div class="choice-group" data-group="dataPersist">
-          <div class="choice"><input type="radio" name="dataPersist" id="pers1" value="כן, לאורך זמן"><label for="pers1">כן, לאורך זמן</label></div>
-          <div class="choice"><input type="radio" name="dataPersist" id="pers2" value="לא, חד־פעמי"><label for="pers2">לא, חד־פעמי</label></div>
+          <div class="choice"><input type="radio" name="dataPersist" id="pr1" value="כן, לאורך זמן"><label for="pr1">כן, לאורך זמן</label></div>
+          <div class="choice"><input type="radio" name="dataPersist" id="pr2" value="לא, חד־פעמי"><label for="pr2">לא, חד־פעמי</label></div>
         </div>
       </div>
     </div>
 
     <!-- 6 -->
     <div class="card">
-      <h2><span class="num">6</span> חיבורים ומגבלות</h2>
+      <h2><span class="num">6</span> מגבלות ולוחות זמנים</h2>
 
       <div class="field">
         <label class="q">צריך להתחבר לכלים קיימים?</label>
         <div class="choice-group" data-group="integrations">
-          <div class="choice"><input type="checkbox" name="integrations" id="int1" value="אקסל"><label for="int1">אקסל</label></div>
-          <div class="choice"><input type="checkbox" name="integrations" id="int2" value="Google"><label for="int2">Google</label></div>
-          <div class="choice"><input type="checkbox" name="integrations" id="int3" value="וואטסאפ"><label for="int3">וואטסאפ</label></div>
-          <div class="choice"><input type="checkbox" name="integrations" id="int4" value="מייל"><label for="int4">מייל</label></div>
-          <div class="choice"><input type="checkbox" name="integrations" id="int5" value="Power BI"><label for="int5">Power BI</label></div>
-          <div class="choice"><input type="checkbox" name="integrations" id="int6" value="סליקה"><label for="int6">סליקה</label></div>
-          <div class="choice"><input type="checkbox" name="integrations" id="int7" value="CRM"><label for="int7">CRM</label></div>
-          <div class="choice"><input type="checkbox" name="integrations" id="int8" value="לא צריך"><label for="int8">לא צריך</label></div>
+          <div class="choice"><input type="checkbox" name="integrations" id="in1" value="אקסל"><label for="in1">אקסל</label></div>
+          <div class="choice"><input type="checkbox" name="integrations" id="in2" value="SharePoint / Teams"><label for="in2">SharePoint / Teams</label></div>
+          <div class="choice"><input type="checkbox" name="integrations" id="in3" value="Google Workspace"><label for="in3">Google Workspace</label></div>
+          <div class="choice"><input type="checkbox" name="integrations" id="in4" value="מייל"><label for="in4">מייל</label></div>
+          <div class="choice"><input type="checkbox" name="integrations" id="in5" value="מערכת ניהול סטודנטים"><label for="in5">מערכת ניהול סטודנטים</label></div>
+          <div class="choice"><input type="checkbox" name="integrations" id="in6" value="מערכת כספים או HR"><label for="in6">מערכת כספים או HR</label></div>
+          <div class="choice"><input type="checkbox" name="integrations" id="in7" value="Moodle"><label for="in7">Moodle</label></div>
+          <div class="choice"><input type="checkbox" name="integrations" id="in8" value="לא צריך"><label for="in8">לא צריך</label></div>
         </div>
       </div>
 
       <div class="field">
-        <label class="q">יש דדליין?</label>
-        <div class="choice-group" data-group="hasDeadline">
-          <div class="choice"><input type="radio" name="hasDeadline" id="dl1" value="כן"><label for="dl1">כן</label></div>
-          <div class="choice"><input type="radio" name="hasDeadline" id="dl2" value="לא"><label for="dl2">לא</label></div>
+        <label class="q">יש מועד שאי אפשר לפספס?</label>
+        <div class="choice-group" data-group="hardDate">
+          <div class="choice"><input type="radio" name="hardDate" id="hd1" value="תחילת סמסטר"><label for="hd1">תחילת סמסטר</label></div>
+          <div class="choice"><input type="radio" name="hardDate" id="hd2" value="מועד דיווח חוץ"><label for="hd2">מועד דיווח חוץ</label></div>
+          <div class="choice"><input type="radio" name="hardDate" id="hd3" value="ישיבת ועדה או הנהלה"><label for="hd3">ישיבת ועדה או הנהלה</label></div>
+          <div class="choice"><input type="radio" name="hardDate" id="hd4" value="פתיחת רישום"><label for="hd4">פתיחת רישום</label></div>
+          <div class="choice"><input type="radio" name="hardDate" id="hd5" value="סוף שנת תקציב"><label for="hd5">סוף שנת תקציב</label></div>
+          <div class="choice"><input type="radio" name="hardDate" id="hd6" value="אין מועד קשיח"><label for="hd6">אין מועד קשיח</label></div>
         </div>
-        <input type="text" class="subfield" data-show-if="hasDeadline=כן" name="deadlineDetails" placeholder="עד מתי בערך?">
+        <input type="text" name="hardDateDetails" placeholder="באיזה תאריך בדיוק? (אם יש)">
       </div>
 
       <div class="field">
-        <label class="q">יש תקציב מוגדר?</label>
-        <div class="choice-group" data-group="hasBudget">
-          <div class="choice"><input type="radio" name="hasBudget" id="bg1" value="כן"><label for="bg1">כן</label></div>
-          <div class="choice"><input type="radio" name="hasBudget" id="bg2" value="לא"><label for="bg2">לא</label></div>
+        <label class="q">נדרש רכש, רישוי או ספק חוץ?</label>
+        <div class="choice-group" data-group="procurement">
+          <div class="choice"><input type="radio" name="procurement" id="pc1" value="כן"><label for="pc1">כן</label></div>
+          <div class="choice"><input type="radio" name="procurement" id="pc2" value="לא"><label for="pc2">לא</label></div>
+          <div class="choice"><input type="radio" name="procurement" id="pc3" value="לא יודע/ת"><label for="pc3">לא יודע/ת</label></div>
         </div>
-        <input type="text" class="subfield" data-show-if="hasBudget=כן" name="budgetDetails" placeholder="טווח תקציב משוער">
+        <input type="text" class="subfield" data-show-if="procurement=כן" name="procurementDetails" placeholder="מה נדרש, ומי מטפל בזה?">
       </div>
 
       <div class="field">
-        <label class="q">יש טכנולוגיה שחייבים / אסור להשתמש בה?</label>
-        <div class="choice-group" data-group="hasTechConstraint">
-          <div class="choice"><input type="radio" name="hasTechConstraint" id="tc1" value="כן"><label for="tc1">כן</label></div>
-          <div class="choice"><input type="radio" name="hasTechConstraint" id="tc2" value="לא"><label for="tc2">לא</label></div>
+        <label class="q">יש טכנולוגיה שחייבים או אסור להשתמש בה?</label>
+        <div class="choice-group" data-group="techConstraint">
+          <div class="choice"><input type="radio" name="techConstraint" id="tc1" value="כן"><label for="tc1">כן</label></div>
+          <div class="choice"><input type="radio" name="techConstraint" id="tc2" value="לא"><label for="tc2">לא</label></div>
         </div>
-        <textarea class="subfield" data-show-if="hasTechConstraint=כן" name="techConstraintDetails" placeholder="פרטו..."></textarea>
+        <textarea class="subfield" data-show-if="techConstraint=כן" name="techConstraintDetails" placeholder="לדוגמה: חייב להישאר בתוך הסביבה של האוניברסיטה, אסור שירות ענן חיצוני"></textarea>
       </div>
     </div>
 
@@ -656,16 +924,18 @@
       <h2><span class="num">7</span> איך נדע שהצליח</h2>
 
       <div class="field">
-        <label class="q" for="successLook">איך ייראה אם הכל עבד מושלם? מה ישתנה ביום־יום?</label>
+        <label class="q" for="successLook">מה ישתנה ביום־יום אם זה יעבוד מושלם?</label>
         <textarea id="successLook" name="successLook"></textarea>
       </div>
+
       <div class="field">
         <label class="q">מה אסור שיקרה בשום מקרה?</label>
         <div class="choice-group" data-group="mustNotHappen">
-          <div class="choice"><input type="checkbox" name="mustNotHappen" id="mnh1" value="איבוד מידע"><label for="mnh1">איבוד מידע</label></div>
-          <div class="choice"><input type="checkbox" name="mustNotHappen" id="mnh2" value="טעות מול לקוח"><label for="mnh2">טעות מול לקוח</label></div>
-          <div class="choice"><input type="checkbox" name="mustNotHappen" id="mnh3" value="כפילות"><label for="mnh3">כפילות</label></div>
-          <div class="choice"><input type="checkbox" name="mustNotHappen" id="mnh4" value="אחר"><label for="mnh4">אחר</label></div>
+          <div class="choice"><input type="checkbox" name="mustNotHappen" id="mn1" value="מספר שגוי שמגיע להנהלה"><label for="mn1">מספר שגוי שמגיע להנהלה</label></div>
+          <div class="choice"><input type="checkbox" name="mustNotHappen" id="mn2" value="חשיפת מידע למי שלא צריך"><label for="mn2">חשיפת מידע למי שלא צריך</label></div>
+          <div class="choice"><input type="checkbox" name="mustNotHappen" id="mn3" value="איבוד מידע"><label for="mn3">איבוד מידע</label></div>
+          <div class="choice"><input type="checkbox" name="mustNotHappen" id="mn4" value="עבודה כפולה במקום חיסכון"><label for="mn4">עבודה כפולה במקום חיסכון</label></div>
+          <div class="choice"><input type="checkbox" name="mustNotHappen" id="mn5" value="אחר"><label for="mn5">אחר</label></div>
         </div>
         <textarea name="mustNotHappenDetails" placeholder="פרטים נוספים (לא חובה)"></textarea>
       </div>
@@ -680,51 +950,110 @@
     </div>
 
     <button type="submit" id="submitBtn">שליחת האפיון</button>
-    <p class="status-msg error" id="errorMsg">משהו השתבש בשליחה. אפשר לנסות שוב, או לשלוח ישירות למייל uriiron20@gmail.com.</p>
+    <p class="status-msg error" id="errorMsg"></p>
   </form>
 
   <div id="successScreen">
     <div class="icon">
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
     </div>
-    <h2>האפיון נשלח בהצלחה!</h2>
-    <p>תודה על הפירוט. קיבלנו את הנתונים ונחזור אליכם בקרוב להמשך העבודה.</p>
+    <h2>האפיון נשלח</h2>
+    <p>תודה על הפירוט. קיבלנו את התשובות ונחזור אליכם להמשך.</p>
   </div>
 </main>
 
-<footer>שאלון אפיון פרויקט</footer>
+<footer id="pageFooter">שאלון אפיון פרויקט</footer>
 
 <!-- EmailJS SDK -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
-/* ====================================================================
-   הגדרות EmailJS — יש למלא לפני שהטופס יעבוד:
-   1. הירשמו בחינם ב-https://www.emailjs.com
-   2. חברו שירות מייל (Gmail) → תקבלו SERVICE_ID
-   3. צרו Email Template → תקבלו TEMPLATE_ID
-      בגוף התבנית השתמשו במשתנה {{message}} להצגת כל התשובות,
-      וב-To Email הגדירו: uriiron20@gmail.com
-   4. ב-Account → General תמצאו את ה-PUBLIC_KEY
-   5. הציבו את שלושת הערכים כאן למטה:
-==================================================================== */
-const EMAILJS_PUBLIC_KEY  = "3C9X5Ur2q1tR8d3Kp";
-const EMAILJS_SERVICE_ID  = "service_re0k9tl";
-const EMAILJS_TEMPLATE_ID = "template_vfhok9h";
+/* ══════════════════════════════════════════════════════════════════
+   הגדרות אישיות — זה כל מה שצריך לערוך בקובץ הזה.
+   הוראות מלאות: SETUP.md
+   ══════════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  ownerName:  "אורי אירון",
+  ownerRole:  "אנליסט BI",
+  ownerUnit:  "",                     // אופציונלי — יחידה / אגף
+  ownerEmail: "urii@ariel.ac.il",     // לכאן יגיעו התשובות
 
-emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+  // שימו קובץ בשם logo.png ליד index.html וכתבו כאן "logo.png".
+  // אפשר גם כתובת URL מלאה. אם משאירים ריק — יוצג השם כטקסט.
+  logo: "",
 
-// --- progress bar ---
+  // שלושת המפתחות מחשבון EmailJS שלכם
+  emailjs: {
+    publicKey:  "3C9X5Ur2q1tR8d3Kp",
+    serviceId:  "service_re0k9tl",
+    templateId: "template_vfhok9h"
+  },
+
+  // מערכות המקור שיוצגו בשאלה "מאיפה הנתונים מגיעים?" — התאימו ליחידה שלכם
+  sourceSystems: [
+    "אקסל / Google Sheets",
+    "מערכת ניהול סטודנטים",
+    "מערכת כספים",
+    "מערכת משאבי אנוש",
+    "Moodle",
+    "מסד נתונים",
+    "טופס או סקר",
+    "הקלדה ידנית"
+  ]
+};
+/* ══════════ מכאן ומטה אין צורך לערוך ══════════ */
+
+// --- כותרת, לוגו וחתימה ---
+(function renderBrand(){
+  const owner = [CONFIG.ownerName, CONFIG.ownerRole, CONFIG.ownerUnit].filter(Boolean).join(" · ");
+  document.title = CONFIG.ownerName ? `שאלון אפיון פרויקט · ${CONFIG.ownerName}` : "שאלון אפיון פרויקט";
+  document.getElementById("ownerLine").textContent = owner;
+  document.getElementById("pageFooter").textContent = owner || "שאלון אפיון פרויקט";
+
+  const brand = document.getElementById("brand");
+  const wordmark = () => {
+    brand.innerHTML = "";
+    if (!CONFIG.ownerName) return;
+    const el = document.createElement("div");
+    el.className = "wordmark";
+    el.textContent = CONFIG.ownerName;
+    brand.appendChild(el);
+  };
+  if (!CONFIG.logo) { wordmark(); return; }
+  const img = document.createElement("img");
+  img.alt = CONFIG.ownerName || "לוגו";
+  img.onerror = wordmark;          // חסר קובץ לוגו — מוצג השם במקום, כדי שהטופס לא ייראה שבור
+  img.src = CONFIG.logo;
+  brand.appendChild(img);
+})();
+
+// --- מערכות המקור מתוך הקונפיג ---
+(function renderSources(){
+  const group = document.getElementById("sourceSystemsGroup");
+  const items = [...(CONFIG.sourceSystems || []), "אחר"];
+  group.innerHTML = items.map((val, i) => {
+    const id = `srcOpt${i}`;
+    return `<div class="choice"><input type="checkbox" name="sources" id="${id}" value="${val}">` +
+           `<label for="${id}">${val}</label></div>`;
+  }).join("");
+})();
+
+// --- הודעת שגיאה עם כתובת המייל מהקונפיג ---
+document.getElementById("errorMsg").textContent =
+  `משהו השתבש בשליחה. אפשר לנסות שוב, או לשלוח ישירות למייל ${CONFIG.ownerEmail}.`;
+
+emailjs.init({ publicKey: CONFIG.emailjs.publicKey });
+
+// --- פס התקדמות ---
 window.addEventListener("scroll", () => {
   const h = document.documentElement;
   const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
   document.getElementById("progressFill").style.width = scrolled + "%";
 });
 
-// --- conditional sub-fields (text shown only if a specific choice is picked) ---
+// --- שדות משנה שנפתחים לפי בחירה ---
 document.querySelectorAll(".subfield[data-show-if]").forEach(sub => {
   const [groupName, expected] = sub.dataset.showIf.split("=");
-  const inputs = document.querySelectorAll(`input[name="${groupName}"]`);
-  inputs.forEach(inp => {
+  document.querySelectorAll(`input[name="${groupName}"]`).forEach(inp => {
     inp.addEventListener("change", () => {
       const checked = document.querySelector(`input[name="${groupName}"]:checked`);
       sub.classList.toggle("show", !!checked && checked.value === expected);
@@ -732,16 +1061,33 @@ document.querySelectorAll(".subfield[data-show-if]").forEach(sub => {
   });
 });
 
-// --- project type blocks ---
+// --- בלוקים לפי סוג הפרויקט ---
+// שדה שהוסתר חייב גם להתרוקן, אחרת תשובות מסוג שנזנח ממשיכות להישלח במייל
+function clearFields(container){
+  container.querySelectorAll("input, textarea, select").forEach(el => {
+    if (el.type === "checkbox" || el.type === "radio") el.checked = false;
+    else el.value = "";
+  });
+  container.querySelectorAll(".subfield").forEach(s => s.classList.remove("show"));
+}
+
 document.querySelectorAll('input[name="projectType"]').forEach(inp => {
   inp.addEventListener("change", () => {
     document.querySelectorAll(".type-block").forEach(block => {
-      block.classList.toggle("show", block.dataset.typeBlock === inp.value);
+      const active = block.dataset.typeBlock === inp.value;
+      if (!active) clearFields(block);
+      block.classList.toggle("show", active);
+    });
+    // שדות שרלוונטיים רק לחלק מהסוגים
+    document.querySelectorAll("[data-types]").forEach(el => {
+      const relevant = el.dataset.types.split(",").includes(inp.value);
+      if (!relevant) clearFields(el);
+      el.hidden = !relevant;
     });
   });
 });
 
-// --- build a readable summary for the email body ---
+// --- בניית גוף המייל ---
 function buildSummary(form){
   const fd = new FormData(form);
   const groups = {};
@@ -751,33 +1097,66 @@ function buildSummary(form){
     groups[key].push(value);
   }
   const label = {
-    contactName:"שם מלא", contactPhone:"טלפון", contactEmail:"אימייל", companyName:"שם עסק/חברה",
-    oneLiner:"תיאור במשפט אחד", today:"איך נעשה היום", todayOther:"פירוט (איך נעשה היום)",
-    pain:"הבעיה הכואבת", painDetails:"פירוט (בעיה כואבת)",
-    users:"מי המשתמשים", usersCount:"כמה משתמשים", permissions:"הרשאות שונות", permissionsDetails:"פירוט הרשאות",
-    mainActions:"3-5 דברים עיקריים", mustHave:"הדבר הכי חשוב",
-    dataIn:"מה נכנס", dataSource:"מאיפה מגיע", dataOut:"מה רוצים לקבל", dataPersist:"שמירת מידע",
-    integrations:"חיבורים לכלים", hasDeadline:"יש דדליין", deadlineDetails:"פרטי דדליין",
-    hasBudget:"יש תקציב", budgetDetails:"פרטי תקציב", hasTechConstraint:"מגבלת טכנולוגיה", techConstraintDetails:"פירוט מגבלת טכנולוגיה",
-    successLook:"איך נראית הצלחה", mustNotHappen:"מה אסור שיקרה", mustNotHappenDetails:"פירוט",
+    contactName:"שם מלא", contactRole:"תפקיד", contactUnit:"יחידה/פקולטה/אגף",
+    contactEmail:"אימייל", contactPhone:"טלפון", approver:"מאשר מצד היחידה",
+
     projectType:"סוג הפרויקט",
-    siteGoal:"מטרת האתר", sitePages:"עמודים", siteBranding:"מיתוג/השראה", siteNeeds:"צרכים נוספים באתר",
-    appPlatform:"פלטפורמה", appDevice:"מכשירים", appLogin:"התחברות משתמשים", appScreens:"מסכים עיקריים",
-    autoProcess:"עיבוד נתונים", autoRules:"כללים מיוחדים", autoTrigger:"הפעלה", autoScheduleDetails:"תדירות", autoWhere:"סביבת הרצה",
-    biSources:"מקורות מידע / דוחות", biFrequency:"תדירות עדכון הדוח", biKpis:"מדדים (KPIs) מעניינים",
-    biGrain:"רמת פירוט (Grain)", biFeatures:"פילטרים / drill-down / השוואה", biTool:"כלי BI",
-    biPermissions:"הרשאות שונות", biPermissionsDetails:"פירוט הרשאות", biAlerts:"התראה על חריגת סף",
-    biAlertsDetails:"פרטי התראה", biDevice:"תצוגה / ייצוא / שיתוף",
+
+    dashKind:"דוח חד־פעמי או מתרענן", dashRefresh:"תדירות רענון",
+    dashKpis:"מדדים מבוקשים", dashDefinitions:"הגדרות המדדים",
+    dashCutoff:"נכון לאיזה מועד", dashCutoffDetails:"תאריך החיתוך",
+    dashTimeUnit:"יחידת זמן", dashGrain:"פיצול לפי", dashHistory:"עומק היסטורי",
+    dashAccess:"גישה לנתונים", dashAccessOwner:"בעל המערכת/מאשר",
+    dashViewers:"מי צופה ובאיזה פורום", dashFeatures:"יכולות בדשבורד",
+    dashTool:"כלי", dashOutput:"תצוגה וייצוא",
+
+    autoTrigger:"מה מפעיל את התהליך", autoSchedule:"לוח זמנים",
+    autoVolume:"נפח", autoProcess:"מה קורה לנתונים", autoRules:"כללים ומקרי קצה",
+    autoExceptions:"טיפול בחריגות", autoExceptionsWho:"למי להתריע",
+    autoWhere:"מערכות וסביבת הרצה", autoPerms:"הרשאות",
+    autoStability:"יציבות התהליך", autoSaving:"זמן ידני היום",
+
+    sysAudience:"מי ישתמש", sysPlatform:"פלטפורמה", sysDevice:"מכשירים",
+    sysAuth:"אופן ההזדהות", sysScreens:"מסכים עיקריים",
+
+    siteGoal:"מטרת האתר", sitePages:"עמודים",
+    siteDomain:"דומיין", siteDomainApprover:"מאשר הדומיין",
+    siteA11y:"נגישות", siteLang:"שפות",
+    siteContent:"מצב התכנים", siteContentDate:"מועד ואחראי לתכנים",
+    siteOwner:"מי מתחזק את האתר", siteNeeds:"צרכים נוספים באתר",
+    siteBranding:"מיתוג והשראה",
+
+    oneLiner:"תיאור במשפט אחד", today:"איך זה נעשה היום", todayOther:"פירוט",
+    pain:"מה כואב", painDetails:"פירוט הכאב",
+    doNothing:"מה יקרה אם לא נעשה כלום", existingTool:"דוח או כלי קיים",
+
+    users:"מי ייגש", usersCount:"כמה אנשים",
+    permissions:"הרשאות שונות", permissionsDetails:"פירוט ההרשאות",
+
+    mainActions:"3-5 דברים עיקריים", mustHave:"הדבר הכי חשוב",
+
+    sources:"מקורות הנתונים", sourceDetails:"אילו דוחות/קבצים בדיוק",
+    dataOut:"מה יוצא בסוף", dataSensitivity:"סוג המידע",
+    alerts:"התראות", alertsDetails:"פרטי ההתראה", dataPersist:"שמירת מידע",
+
+    integrations:"חיבורים לכלים",
+    hardDate:"מועד קשיח", hardDateDetails:"תאריך",
+    procurement:"רכש/רישוי/ספק חוץ", procurementDetails:"פרטי הרכש",
+    techConstraint:"מגבלת טכנולוגיה", techConstraintDetails:"פירוט המגבלה",
+
+    successLook:"איך נראית הצלחה",
+    mustNotHappen:"מה אסור שיקרה", mustNotHappenDetails:"פירוט",
+
     extraNotes:"הערות נוספות"
   };
-  let lines = [];
+  const lines = [];
   Object.keys(label).forEach(key => {
     if (groups[key]) lines.push(`${label[key]}: ${groups[key].join(", ")}`);
   });
   return lines.join("\n");
 }
 
-// --- submit handler ---
+// --- שליחה ---
 const form = document.getElementById("briefForm");
 const submitBtn = document.getElementById("submitBtn");
 const errorMsg = document.getElementById("errorMsg");
@@ -789,14 +1168,15 @@ form.addEventListener("submit", function(e){
   submitBtn.textContent = "שולח...";
 
   const templateParams = {
-    from_name: document.getElementById("contactName").value,
-    from_email: document.getElementById("contactEmail").value || "לא צוין",
-    from_phone: document.getElementById("contactPhone").value,
-    to_email: "uriiron20@gmail.com",
-    message: buildSummary(form)
+    from_name:  document.getElementById("contactName").value,
+    from_email: document.getElementById("contactEmail").value,
+    from_phone: document.getElementById("contactPhone").value || "לא צוין",
+    from_unit:  document.getElementById("contactUnit").value,
+    to_email:   CONFIG.ownerEmail,
+    message:    buildSummary(form)
   };
 
-  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+  emailjs.send(CONFIG.emailjs.serviceId, CONFIG.emailjs.templateId, templateParams)
     .then(() => {
       form.style.display = "none";
       document.getElementById("successScreen").classList.add("show");

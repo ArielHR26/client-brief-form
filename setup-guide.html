@@ -1,0 +1,391 @@
+<meta charset="utf-8">
+<title>הקמת טופס אפיון</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Suez+One&family=Heebo:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --ground:#f3f6f7;
+    --surface:#ffffff;
+    --surface-2:#e7eef0;
+    --ink:#14191c;
+    --muted:#586b72;
+    --line:#d2dde0;
+    --accent:#0b5a78;
+    --accent-soft:#d9e9ef;
+    --warn:#8a4a12;
+    --warn-soft:#f5e7d8;
+    --warn-line:#e0c49f;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#11161a;
+      --surface:#1a2126;
+      --surface-2:#232d33;
+      --ink:#e7eef1;
+      --muted:#93a6ad;
+      --line:#2d3a41;
+      --accent:#6fc0d8;
+      --accent-soft:#16323d;
+      --warn:#e0aa6c;
+      --warn-soft:#2f2618;
+      --warn-line:#4a3a22;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#11161a;
+    --surface:#1a2126;
+    --surface-2:#232d33;
+    --ink:#e7eef1;
+    --muted:#93a6ad;
+    --line:#2d3a41;
+    --accent:#6fc0d8;
+    --accent-soft:#16323d;
+    --warn:#e0aa6c;
+    --warn-soft:#2f2618;
+    --warn-line:#4a3a22;
+  }
+
+  body{
+    direction:rtl;
+    margin:0;
+    background:var(--ground);
+    color:var(--ink);
+    font-family:"Heebo",-apple-system,"Segoe UI",sans-serif;
+    font-size:17px;
+    line-height:1.68;
+    padding:clamp(24px,5vw,60px) clamp(16px,5vw,28px) 90px;
+  }
+  .wrap{max-width:820px;margin:0 auto;}
+  p{margin:0 0 14px;max-width:66ch;}
+  p:last-child{margin-bottom:0;}
+  a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px;}
+  a:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px;}
+
+  h1{
+    font-family:"Suez One",Georgia,serif;font-weight:400;
+    font-size:clamp(29px,5.5vw,40px);line-height:1.2;margin:0 0 14px;text-wrap:balance;
+  }
+  h2{
+    font-family:"Suez One",Georgia,serif;font-weight:400;
+    font-size:clamp(20px,3.6vw,25px);line-height:1.3;margin:0;text-wrap:balance;
+  }
+  h3{font-size:17px;font-weight:700;margin:22px 0 8px;}
+
+  .kicker{
+    font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--muted);margin:0 0 12px;
+  }
+  .lede{font-size:19px;color:var(--muted);font-weight:300;max-width:60ch;}
+
+  .meta{
+    display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 44px;
+  }
+  .tag{
+    font-size:14px;padding:5px 13px;border-radius:100px;
+    background:var(--surface);border:1px solid var(--line);color:var(--muted);
+  }
+  .tag strong{color:var(--ink);font-weight:500;}
+
+  /* step spine */
+  .step{
+    display:grid;grid-template-columns:44px 1fr;gap:0 18px;
+    padding-bottom:34px;margin-bottom:34px;border-bottom:1px solid var(--line);
+  }
+  .step:last-of-type{border-bottom:none;}
+  .step-num{
+    font-family:"IBM Plex Mono",monospace;font-size:15px;font-weight:500;
+    color:var(--accent);background:var(--accent-soft);
+    width:38px;height:38px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    margin-top:2px;
+  }
+  .step-body > *:first-child{margin-top:0;}
+  .step-head{grid-column:2;}
+  .step-body{grid-column:2;padding-top:12px;}
+  @media (max-width:560px){
+    .step{grid-template-columns:1fr;gap:12px;}
+    .step-num{grid-column:1;}
+    .step-head,.step-body{grid-column:1;}
+    .step-body{padding-top:0;}
+  }
+
+  ol.plain,ul.plain{margin:0 0 14px;padding-inline-start:22px;}
+  ol.plain li,ul.plain li{margin-bottom:8px;max-width:64ch;}
+  ol.plain li:last-child,ul.plain li:last-child{margin-bottom:0;}
+
+  code{
+    font-family:"IBM Plex Mono",monospace;font-size:14.5px;
+    background:var(--surface-2);padding:2px 6px;border-radius:3px;
+    direction:ltr;display:inline-block;unicode-bidi:embed;
+  }
+  pre{
+    font-family:"IBM Plex Mono",monospace;font-size:13.5px;line-height:1.6;
+    direction:ltr;text-align:left;
+    background:var(--surface);border:1px solid var(--line);
+    border-right:3px solid var(--accent);
+    border-radius:5px;padding:16px 18px;margin:0 0 14px;
+    overflow-x:auto;
+  }
+  pre code{background:none;padding:0;font-size:inherit;display:inline;}
+  .comment{color:var(--muted);}
+
+  .table-scroll{overflow-x:auto;margin:0 0 14px;border:1px solid var(--line);border-radius:5px;background:var(--surface);}
+  table{border-collapse:collapse;width:100%;font-size:15.5px;min-width:440px;}
+  th,td{text-align:right;padding:11px 15px;border-bottom:1px solid var(--line);vertical-align:top;}
+  thead th{
+    background:var(--surface-2);color:var(--muted);font-weight:500;
+    font-family:"IBM Plex Mono",monospace;font-size:11.5px;
+    letter-spacing:.09em;text-transform:uppercase;
+  }
+  tbody tr:last-child td{border-bottom:none;}
+
+  .note{
+    background:var(--surface);border:1px solid var(--line);
+    border-right:3px solid var(--accent);
+    border-radius:5px;padding:15px 18px;margin:0 0 14px;
+  }
+  .note.warn{border-right-color:var(--warn);background:var(--warn-soft);border-color:var(--warn-line);}
+  .note p{margin:0;}
+  .note p + p{margin-top:10px;}
+  .note-label{
+    display:block;font-family:"IBM Plex Mono",monospace;font-size:11.5px;
+    letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;
+  }
+
+  section.block{margin-top:56px;}
+  .block > h2{margin-bottom:16px;}
+
+  .split{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin:0 0 20px;}
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:5px;padding:18px 20px;}
+  .panel h3{margin:0 0 8px;font-size:16px;}
+  .panel p{font-size:15.5px;margin:0;color:var(--muted);}
+  .panel p strong{color:var(--ink);font-weight:500;}
+
+  details{
+    background:var(--surface);border:1px solid var(--line);border-radius:5px;
+    padding:0 18px;margin-bottom:10px;
+  }
+  summary{
+    cursor:pointer;padding:14px 0;font-weight:500;list-style:none;
+    display:flex;align-items:center;gap:10px;
+  }
+  summary::-webkit-details-marker{display:none;}
+  summary::before{
+    content:"+";font-family:"IBM Plex Mono",monospace;color:var(--accent);
+    font-size:17px;flex:0 0 auto;
+  }
+  details[open] summary::before{content:"–";}
+  details > p{padding-bottom:16px;margin:0;font-size:16px;}
+  details > p + p{padding-bottom:16px;margin-top:-6px;}
+</style>
+
+<div class="wrap">
+
+  <p class="kicker">מדריך הקמה · טופס אפיון פרויקט</p>
+  <h1>איך מקימים טופס אפיון משלכם</h1>
+  <p class="lede">עותק עם הלוגו שלכם והמייל שלכם, כתובת אינטרנט משלכם, והתשובות מגיעות ישר לתיבה שלכם.</p>
+
+  <div class="meta">
+    <span class="tag">זמן הקמה <strong>~20 דקות</strong></span>
+    <span class="tag">עלות <strong>0 ₪</strong></span>
+    <span class="tag">נדרש <strong>חשבון GitHub</strong></span>
+  </div>
+
+  <p>לכל אנליסט טופס נפרד. אם שלושה יעבדו על אותו טופס, התשובות של כולם יגיעו לאותה תיבה. אז כל
+  אחד מקים עותק אחד, פעם אחת, ואחר כך שוכח מזה.</p>
+
+  <p>צריך חשבון GitHub. אין דרך לעקוף את זה, וזה גם לא באמת חסם: ההרשמה חינמית ולוקחת שתי דקות.
+  בסוף המדריך יש סעיף שמסביר בדיוק מה פומבי כאן ומה לא, כי זו השאלה הראשונה שכולם שואלים.</p>
+
+  <section class="block">
+    <h2>ששת השלבים</h2>
+  </section>
+
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-head"><h2>חשבון GitHub וריפו חדש</h2></div>
+    <div class="step-body">
+      <ol class="plain">
+        <li>נרשמים ב-<a href="https://github.com/signup">github.com/signup</a>.</li>
+        <li>לוחצים <strong>New</strong> ויוצרים ריפו חדש. שם טוב: <code>project-brief</code>.</li>
+        <li>משאירים אותו <strong>Public</strong>.</li>
+      </ol>
+      <div class="note">
+        <span class="note-label">למה Public</span>
+        <p>GitHub Pages, השירות שיהפוך את הקובץ לכתובת אינטרנט, לא עובד על ריפו פרטי בחשבון חינמי.
+        מה שיהיה פומבי זה קובץ הטופס עצמו, לא התשובות. פירוט מלא למטה.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-head"><h2>מעלים את הקבצים</h2></div>
+    <div class="step-body">
+      <p>מקבלים מאורי את <code>index.html</code>. בריפו החדש: <strong>Add file → Upload files</strong>,
+      גוררים את הקובץ, <strong>Commit changes</strong>.</p>
+      <p>אם יש לכם לוגו, מעלים גם אותו באותה דרך. שמרו אותו בשם <code>logo.png</code>, PNG עם רקע
+      שקוף, ברוחב 400 פיקסלים בערך. תמונה של 4 מגה סתם מאטה את הטופס לפונה.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-head"><h2>מדליקים את האתר</h2></div>
+    <div class="step-body">
+      <ol class="plain">
+        <li>בריפו: <strong>Settings → Pages</strong>.</li>
+        <li>תחת <strong>Source</strong> בוחרים <strong>Deploy from a branch</strong>.</li>
+        <li>תחת <strong>Branch</strong> בוחרים <code>main</code> ואת התיקייה <code>/ (root)</code>, ואז <strong>Save</strong>.</li>
+      </ol>
+      <p>אחרי דקה או שתיים הכתובת תופיע באותו עמוד, בצורה
+      <code>https://SHEM-MISHTAMESH.github.io/project-brief/</code>. זו הכתובת שתשלחו ליחידות. שמרו אותה.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-head"><h2>חשבון EmailJS</h2></div>
+    <div class="step-body">
+      <p>EmailJS לוקח את מה שמולא בטופס ושולח לכם אותו במייל. חינמי עד 200 מיילים בחודש.</p>
+      <ol class="plain">
+        <li>נרשמים ב-<a href="https://www.emailjs.com">emailjs.com</a>.</li>
+        <li><strong>Email Services → Add New Service</strong>, בוחרים Gmail או Outlook, מחברים את חשבון
+        המייל שממנו יישלחו ההודעות. בסוף מקבלים <strong>Service ID</strong>.</li>
+        <li><strong>Email Templates → Create New Template</strong>, וממלאים כך:</li>
+      </ol>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>שדה בתבנית</th><th>מה לכתוב בו</th></tr></thead>
+          <tbody>
+            <tr><td>To Email</td><td><code>{{to_email}}</code></td></tr>
+            <tr><td>Reply To</td><td><code>{{from_email}}</code></td></tr>
+            <tr><td>Subject</td><td><code>אפיון חדש מ-{{from_unit}}</code></td></tr>
+            <tr><td>Content</td><td><code>{{message}}</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note warn">
+        <span class="note-label">כאן נופלים</span>
+        <p><code>{{to_email}}</code> בשדה To Email הוא מה שגורם לתבנית לעבוד לכל אחד. אם תכתבו שם
+        כתובת מייל קשיחה, הטופס ישלח לשם, לא לכם, ולא תהיה שום הודעת שגיאה שתסביר למה.</p>
+        <p><code>{{from_email}}</code> בשדה Reply To אומר שלחיצה על "השב" במייל תגיע לאדם שמילא את
+        הטופס. בלי זה תשלחו תשובה לעצמכם.</p>
+      </div>
+      <ol class="plain" start="4">
+        <li>שומרים, ומקבלים <strong>Template ID</strong>.</li>
+        <li><strong>Account → General</strong>: משם לוקחים את ה-<strong>Public Key</strong>.</li>
+        <li><strong>Account → Security</strong>: מדליקים <strong>Allow list</strong> ומוסיפים את
+        הדומיין <code>SHEM-MISHTAMESH.github.io</code>. בלי זה, מי שמעתיק את הקוד שלכם יכול לשלוח
+        מיילים על חשבון המנה שלכם.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">5</div>
+    <div class="step-head"><h2>ממלאים את בלוק ההגדרות</h2></div>
+    <div class="step-body">
+      <p>פותחים את <code>index.html</code> בריפו ולוחצים על העיפרון. קרוב לסוף הקובץ יש בלוק אחד
+      מסומן, וזה כל מה שצריך לגעת בו:</p>
+<pre><code>const CONFIG = {
+  ownerName:  "דנה כהן",
+  ownerRole:  "אנליסטית BI",
+  ownerUnit:  "אגף משאבי אנוש",
+  ownerEmail: "dana@ariel.ac.il",
+
+  logo: "logo.png",
+
+  emailjs: {
+    publicKey:  "<span class="comment">המפתח מהשלב הקודם</span>",
+    serviceId:  "service_xxxxxxx",
+    templateId: "template_xxxxxxx"
+  },
+
+  sourceSystems: [
+    "אקסל / Google Sheets",
+    "מערכת ניהול סטודנטים",
+    "מערכת כספים",
+    "מערכת משאבי אנוש",
+    "Moodle",
+    "מסד נתונים",
+    "טופס או סקר",
+    "הקלדה ידנית"
+  ]
+};</code></pre>
+      <h3>שני דברים ששווה להתאים</h3>
+      <p><code>logo</code> נשאר ריק (<code>""</code>) אם אין לכם קובץ לוגו. אז יוצג השם שלכם כטקסט,
+      והטופס נראה תקין ולא שבור.</p>
+      <p><code>sourceSystems</code> היא הרשימה שמופיעה בשאלה "מאיפה הנתונים מגיעים?". ערכו אותה
+      למערכות שאתם באמת עובדים איתן. אנליסט באגף כספים ואנליסט במדור בחינות עובדים מול מערכות
+      אחרות לגמרי, וכשהרשימה מדויקת הפונה מסמן במקום לכתוב, ואתם מקבלים תשובה שאפשר לעבוד לפיה.</p>
+      <p><strong>Commit changes</strong>, ואחרי דקה השינוי באוויר.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">6</div>
+    <div class="step-head"><h2>בודקים שזה עובד</h2></div>
+    <div class="step-body">
+      <p>נכנסים לכתובת שלכם, ממלאים את הטופס בנתונים מומצאים, ושולחים. המייל צריך להגיע תוך שניות.</p>
+      <p>אם לא הגיע: פתחו את הכתובת בכרום, לחצו F12, ותסתכלו על הלשונית Console. שגיאה של EmailJS
+      תופיע שם עם הסבר. ברוב המקרים הבעיה אחת מהשלוש: מפתח שהועתק עם רווח מיותר, שדה To Email
+      שאינו <code>{{to_email}}</code>, או Allow list שמוגדר לדומיין אחר.</p>
+    </div>
+  </div>
+
+  <section class="block">
+    <h2>אבטחת מידע</h2>
+    <p>הריפו פומבי, וזו השאלה הראשונה שעולה. בפירוט:</p>
+    <div class="split">
+      <div class="panel">
+        <h3>מה כל אחד יכול לראות</h3>
+        <p>את קובץ ה-HTML, את הלוגו, ואת מפתח ה-EmailJS הפומבי. <strong>המפתח הזה נקרא Public Key
+        כי הוא נועד לשבת בקוד של דף אינטרנט.</strong> הוא מזהה את החשבון ולא נותן גישה אליו, ואי אפשר
+        לקרוא איתו שום מייל ששלחתם או קיבלתם.</p>
+      </div>
+      <div class="panel">
+        <h3>מה אף אחד לא יכול לראות</h3>
+        <p>את התשובות. <strong>אף מילוי של הטופס לא נשמר בריפו ולא ב-GitHub.</strong> מה שמולא נשלח
+        דרך EmailJS ישר לתיבה שלכם ונעלם מהדף. אין מסד נתונים, אין ארכיון, אין לוג.</p>
+      </div>
+    </div>
+    <h3>מה כן צריך לעשות</h3>
+    <p>להדליק את ה-Allow list בשלב 4. זה מה שמונע ממישהו לקחת את הקוד שלכם ולשלוח מיילים על חשבון
+    המנה החודשית שלכם.</p>
+    <h3>מה לא לעשות</h3>
+    <ul class="plain">
+      <li><strong>לא להעלות לריפו קבצי נתונים אמיתיים.</strong> שום אקסל של סטודנטים, שום ייצוא
+      ממערכת, שום <code>.db</code>. הריפו מכיל קובץ טופס ולוגו, וזה הכל.</li>
+      <li><strong>לא להשתמש בטופס לאיסוף מידע אישי.</strong> הטופס שואל את היחידה מה הצורך שלה,
+      הוא לא מבקש ממנה נתונים. אם פונה מתחיל להדביק תעודות זהות או ציונים בשדה טקסט, עצרו אותו
+      והעבירו את זה לערוץ מאובטח. המילוי עובר בדרכו אליכם דרך שרת של EmailJS, וזה בסדר לתיאור
+      צורך, לא לנתונים.</li>
+    </ul>
+  </section>
+
+  <section class="block">
+    <h2>שאלות שחוזרות</h2>
+    <details>
+      <summary>אפשר להוסיף או לשנות שאלות?</summary>
+      <p>כן, זה HTML רגיל. רק שימו לב לדבר אחד: לכל שדה יש <code>name</code>, ובתוך הפונקציה
+      <code>buildSummary</code> יש מילון שמתרגם כל <code>name</code> לכיתוב בעברית. שדה שנוסיף בלי
+      לרשום אותו במילון פשוט לא יופיע במייל, בלי שום הודעת שגיאה. זו הטעות הכי נפוצה בקובץ הזה.</p>
+    </details>
+    <details>
+      <summary>מה קורה אם עוברים את 200 המיילים בחודש?</summary>
+      <p>EmailJS מפסיק לשלוח עד תחילת החודש הבא. לטופס אפיון שנשלח לכמה יחידות בשנה זה רחוק מלהיות
+      בעיה. אם אתם מתקרבים למגבלה, כנראה שהטופס משמש למשהו אחר ממה שהוא נבנה בשבילו.</p>
+    </details>
+    <details>
+      <summary>אפשר לשנות את העיצוב?</summary>
+      <p>כן. כל ה-CSS יושב בראש הקובץ, והצבעים מוגדרים כמשתנים תחת <code>:root</code>. שינוי של
+      <code>--color-accent</code> מחליף את צבע ההדגשה בכל הטופס.</p>
+    </details>
+    <details>
+      <summary>איך מקבלים את כל התשובות במקום אחד ולא כמיילים בודדים?</summary>
+      <p>אין תשובה טובה לזה בגרסה הזאת. אם תגיעו למצב שהטופס נשלח לעשרות יחידות ואי אפשר לעקוב
+      במייל, דברו עם אורי, כי זה כבר צריך פתרון אחר.</p>
+    </details>
+  </section>
+
+</div>
